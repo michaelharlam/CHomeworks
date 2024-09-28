@@ -23,12 +23,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="41550fff-3c23-45dd-8dea-3854c7137fe4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Sorts.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Sorts.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/editor.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="41550fff-3c23-45dd-8dea-3854c7137fe4" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -158,7 +153,7 @@
       <option name="presentableId" value="Default" />
       <updated>1727468310208</updated>
       <workItem from="1727468311607" duration="225000" />
-      <workItem from="1727516520045" duration="13305000" />
+      <workItem from="1727516520045" duration="14233000" />
     </task>
     <servers />
   </component>

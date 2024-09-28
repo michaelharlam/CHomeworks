@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <math.h>
+#include <stdbool.h>
 
 double simplePower(int base, int exp) {
     int iterationsExp = fabs(exp) - 1;
@@ -16,15 +17,18 @@ double simplePower(int base, int exp) {
     }
 
     if (exp < 0) {
-        return 1 / (float)base;
+        return 1 / (double)base;
     } else {
         return base;
     }
 }
 
-int fastPower(int base, int exp) {
+double fastPower(int base, int exp) {
     if (exp == 0) {
         return 1;
+    }
+    if (exp < 0) {
+        return 1/fastPower(base, -exp);
     }
     if ((exp % 2) == 1) {
         return fastPower(base, exp - 1) * base;
@@ -34,47 +38,53 @@ int fastPower(int base, int exp) {
     }
 }
 
-void test1(void) {
-    if (simplePower(2, 10) == 1024.0) {
-        printf("simplePower(2, 10) test passed\n");
-    } else {
-        printf("simplePower(2, 10) test failed\n");
+bool simplePowerTest1(void) {
+    if  (fabs(simplePower(2, -10) - (1/(double)1024)) < 0.01) {
+        return true;
     }
+    return false;
 }
 
-void test2(void) {
-    if (simplePower(2, -10) == (1/(float)1024.0)) {
-        printf("simplePower(2, -10) test passed\n");
-    } else {
-        printf("simplePower(2, -10) test failed\n");
+bool simplePowerTest2(void) {
+    if (fabs(simplePower(2, 10) - 1024.0) < 0.01) {
+        return true;
     }
+    return false;
 }
 
-void test3(void) {
-    if (fastPower(2, 10) == 1024) {
-        printf("fastPower(2, 10) test passed\n");
-    } else {
-        printf("fastPower(2, 10) test failed\n");
+bool fastPowerTest1(void) {
+    if (fabs(fastPower(2, 10) - 1024.0) < 0.01) {
+        return true;
     }
+    return false;
 }
 
-void test4(void) {
-    if (fastPower(2, -10) == -1024) {
-        printf("fastPower(2, 10) test passed\n");
-    } else {
-        printf("fastPower(2, 10) test failed\n");
+bool fastPowerTest2(void) {
+    if (fabs(fastPower(2, -10) - (1/(double)1024)) < 0.01) {
+        return true;
     }
-    float result = fastPower(2, -10);
-    printf("%f\n", result);
+    return false;
 }
 
-void test(void) {
-    test1();
-    test2();
-    test3();
-    test4();
+bool test(void) {
+    bool valueOfSimplePowerTest1 = simplePowerTest1(), valueOfSimplePowerTest2 = simplePowerTest2();
+    bool valueOfFastPowerTest1 = fastPowerTest1(), valueOfFastPowerTest2 = fastPowerTest2();
+    if (valueOfSimplePowerTest1 && valueOfSimplePowerTest2 && valueOfFastPowerTest1 && valueOfFastPowerTest2) {
+        return true;
+    } else if (!valueOfSimplePowerTest1) {
+        printf("Test 1 of simple power func failed\n");
+    } else if (!valueOfSimplePowerTest2) {
+        printf("Test 2 of simple power func failed\n");
+    } else if (!valueOfFastPowerTest1) {
+        printf("Test 1 of fast power func failed\n");
+    } else {
+        printf("Test 2 of fast power func failed\n");
+    }
+    return false;
 }
 
 int main(void) {
-    test();
+    if (test) {
+        printf("Program is ready for work!");*
+    }
 }
