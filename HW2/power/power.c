@@ -85,6 +85,6 @@ bool test(void) {
 
 int main(void) {
     if (test) {
-        printf("Program is ready for work!");*
+        printf("Program is ready for work!");
     }
 }
