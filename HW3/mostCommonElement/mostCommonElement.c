@@ -3,38 +3,35 @@
 #include <stdlib.h>
 
 void swap(int *number1, int *number2) {
-    *number1 ^= *number2;
-    *number2 ^= *number1;
-    *number1 ^= *number2;
+    int temp = *number1;
+    *number1 = *number2;
+    *number2 = temp;
 }
 
-void heapify(int array[], int n, int i) {
-    int largest = i;
-    int l = 2 * i + 1;
-    int r = 2 * i + 2;
+void quickSort(int *array, int size) {
+    int left = 0;
+    int right = size - 1;
+    int middle = array[size / 2];
 
-    if (l < n && array[l] > array[largest]) {
-        largest = l;
+    do {
+        while (array[left] < middle) {
+            ++left;
+        }
+        while (array[right] > middle) {
+            --right;
+        }
+        if (left <= right) {
+            swap(&array[left], &array[right]);
+            ++left;
+            --right;
+        }
+    } while (left <= right);
+
+    if (right > 0) {
+        quickSort(array, right + 1);
     }
-
-    if (r < n && array[r] > array[largest]) {
-        largest = r;
-    }
-
-    if (largest != i) {
-        swap(&array[i], &array[largest]);
-        heapify(array, n, largest);
-    }
-}
-
-
-void heapSort(int array[], int n) {
-    for (int i = n / 2 - 1; i >= 0; --i)
-        heapify(array, n, i);
-
-    for (int i= n - 1; i >= 0; --i) {
-        swap(&array[0], &array[i]);
-        heapify(array, i, 0);
+    if (left < size) {
+        quickSort(&array[left], size - left);
     }
 }
 
@@ -43,7 +40,7 @@ int mostCommonElement(int array[], int length) {
     int element = array[0];
     int mostCommon = array[0];
 
-    heapSort(array, length);
+    quickSort(array, length - 1);
 
     for (int i = 0; i < length; ++i) {
         if (element == array[i]) {
@@ -62,8 +59,8 @@ int mostCommonElement(int array[], int length) {
 }
 
 bool test1(void) {
-    int array[5] = {1, 4, 4, 2, 5};
-    int mostCommon = 4;
+    int array[5] = {1, 4, 1, 2, 5};
+    int mostCommon = 1;
     int result = mostCommonElement(array, 5);
     if (result == mostCommon) {
         return true;
