@@ -27,39 +27,71 @@ int mostCommonElement(int array[], int length) {
     return mostCommon;
 }
 
-bool test1(void) {
+bool testForQuickSort(void) {
+    int size = 1000;
+    int *array = malloc(sizeof(int) * size);
+    for (int i = 0; i < size; ++i) {
+        array[i] = rand() % 10000;
+    }
+    quickSort(array, size);
+    for (int i = 0; i < (size - 1); ++i) {
+        if (array[i] > array[i + 1]) {
+            printf("The test for quick sort is failed\n");
+            return false;
+        }
+    }
+    free(array);
+    return true;
+}
+
+
+bool testForMostCommonElement1(void) {
     int array[5] = {1, 4, 1, 2, 5};
     int mostCommon = 1;
     int result = mostCommonElement(array, 5);
     if (result == mostCommon) {
         return true;
     }
+    printf("The first test for most common element is failed\n");
     return false;
 }
 
-bool test2(void) {
+bool testForMostCommonElement2(void) {
     int array[19] = {1, 4, 4, 2, 5, 6, 4, 5, 0, 5, 8, 9, 8, 9, 86, 5, 34, 1, 0};
     int mostCommon = 5;
     int result = mostCommonElement(array, 19);
     if (result == mostCommon) {
         return true;
     }
+    printf("The second test for most common element is failed\n");
     return false;
 }
 
+bool testForFileReader(void) {
+    int checkArray[5] = {1, 2, 3, 4, 5};
+    char fileName[10] = "test.txt\0";
+    int arrayLength = 5;
+    int* array = malloc(sizeof(int) * arrayLength);
+
+    bool fileOpening = fileReader(array, arrayLength, fileName);
+    if (!fileOpening) {
+        free(array);
+        return false;
+    };
+
+    for (int i = 0; i < arrayLength; ++i) {
+        if (array[i] != checkArray[i]) {
+            printf("The test for file reader is failed\n");
+            free(array);
+            return false;
+        }
+    }
+    free(array);
+    return true;
+}
+
 bool test(void) {
-    bool test1Attempt = test1();
-    bool test2Attempt = test2();
-    if (test1Attempt && test2Attempt) {
-        return true;
-    }
-    if (!test1Attempt) {
-        printf("The first test is failed\n");
-    }
-    if (!test2Attempt) {
-        printf("The second test is failed\n");
-    }
-    return false;
+    return testForQuickSort() && testForMostCommonElement1() && testForMostCommonElement2() && testForFileReader();
 }
 
 int main(void) {
@@ -73,11 +105,13 @@ int main(void) {
     int result = 0;
 
     int* array = malloc(arrayLength * sizeof(int));
-    bool fileOpening = fileReader(array, arrayLength);
+    char fileName[11] = "array.txt\0";
+    bool fileOpening = fileReader(array, arrayLength, fileName);
     if (!fileOpening) {
         return 1;
     };
 
     result = mostCommonElement(array, arrayLength);
-    printf("The most common element is: %d\n", result);
+    printf("The most common element: %d\n", result);
+    free(array);
 }
