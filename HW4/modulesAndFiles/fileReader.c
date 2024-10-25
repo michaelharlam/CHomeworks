@@ -1,6 +1,6 @@
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 bool fileReader(int *array, int arrayLength) {
     FILE *arrayFile;

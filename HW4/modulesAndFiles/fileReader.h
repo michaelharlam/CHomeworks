@@ -1,6 +1,7 @@
 #ifndef FILEREADER_H
 #define FILEREADER_H
+#include <stdbool.h>
 
-int fileReader(int *array, int arrayLength);
+bool fileReader(int *array, int arrayLength);
 
 #endif //FILEREADER_H
