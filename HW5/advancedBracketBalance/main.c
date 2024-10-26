@@ -14,17 +14,17 @@ bool advancedBracketBalance(char *string, int lengthOfTheString) {
                     if (string[i] != ')') {
                         return false;
                     }
-                break;
+                    break;
                 case '{':
                     if (string[i] != '}') {
                         return false;
                     }
-                break;
+                    break;
                 case '[':
                     if (string[i] != ']') {
                         return false;
                     }
-                break;
+                    break;
             }
         }
     }
@@ -32,5 +32,5 @@ bool advancedBracketBalance(char *string, int lengthOfTheString) {
 }
 
 int main(void) {
-    
+
 }
