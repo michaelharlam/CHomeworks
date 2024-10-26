@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include "stack.h"
+#include <string.h>
+
+#include "../stack/stack.h"
 
 bool advancedBracketBalance(char *string, int lengthOfTheString) {
     Stack *stackWithBrackets = createStack();
@@ -32,5 +34,8 @@ bool advancedBracketBalance(char *string, int lengthOfTheString) {
 }
 
 int main(void) {
-
+    char *string = "{}[()]";
+    int lengthOfTheString = strlen(string);
+    bool result = advancedBracketBalance(string, lengthOfTheString);
+    printf("%s\n", result ? "true" : "false");
 }
