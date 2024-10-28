@@ -1,6 +1,7 @@
 #include "stack.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 typedef struct stackElement {
     char value;
@@ -30,4 +31,8 @@ int pop(Stack *stack) {
     stack->head = tmp->next;
     free(tmp);
     return value;
+}
+
+bool isEmpty(Stack *stack) {
+    return stack->head == NULL;
 }
