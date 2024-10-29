@@ -1,14 +1,12 @@
 #include "../stack/stack.h"
 #include <stdbool.h>
+#include <stdio.h>
 
-bool operationCheck(char *symbol) {
+bool operationCheck(char symbol) {
     switch (symbol) {
         case '+':
-            return true;
         case '-':
-            return true;
         case '*':
-            return true;
         case '/':
             return true;
         default:
@@ -17,28 +15,38 @@ bool operationCheck(char *symbol) {
 }
 
 //пофиксить деление
-int calculate(char *number1, char *number2, char *operation) {
-    int int_number1 = (int)number1;
-    int int_number2 = (int)number2;
+int calculate(int number1, int number2, char operation) {
     switch (operation) {
         case '+':
-            return int_number1 + int_number2;
+            return number1 + number2;
         case '-':
-            return int_number1 - int_number2;
+            return number1 - number2;
         case '*':
-            return int_number1 * int_number2;
+            return number1 * number2;
         case '/':
-            return int_number1 / int_number2;
+            return number1 / number2;
     }
+}
+
+int charToInt(char character) {
+    return character - '0';
 }
 
 int postfixCalculator(char *expression, int stringLength) {
     Stack *stackWithResults = createStack();
     for (int i = 0; i < stringLength; i++) {
-        if (!operationCheck(expression[i]) && !operationCheck(expression[i + 1])) {
-            push(stackWithResult, )
+        if (operationCheck(expression[i])) {
+            int number2 = pop(stackWithResults);
+            int number1 = pop(stackWithResults);
+            push(stackWithResults, calculate(number1, number2, expression[i]));
+        } else {
+            push(stackWithResults, charToInt(expression[i]));
         }
     }
+    return pop(stackWithResults);
 }
 
-int main() {}
+int main(void) {
+    int result = postfixCalculator("75*56*-", 7);
+    printf("%d\n", result);
+}

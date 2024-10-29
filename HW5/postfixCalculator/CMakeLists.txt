@@ -3,5 +3,10 @@ project(postfixCalculator C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(postfixCalculator
-    main.c)
+add_executable(postfixCalculator main.c ../stack/stack.c)
+
+include_directories(../stack)
+
+install(TARGETS postfixCalculator DESTINATION bin)
+
+install(FILES ../stack/*.h DESTINATION include)
