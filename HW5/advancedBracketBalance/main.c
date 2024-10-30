@@ -4,7 +4,8 @@
 
 #include "../stack/stack.h"
 
-bool advancedBracketBalance(char *string, int lengthOfTheString) {
+bool advancedBracketBalance(char *string) {
+    int lengthOfTheString = strlen(string);
     Stack *stackWithBrackets = createStack();
     for (int i = 0; i < lengthOfTheString; i++) {
         if (string[i] == '(' || string[i] == '{' || string[i] == '[') {
@@ -34,8 +35,10 @@ bool advancedBracketBalance(char *string, int lengthOfTheString) {
 }
 
 int main(void) {
-    char *string = "{}[()]";
-    int lengthOfTheString = strlen(string);
-    bool result = advancedBracketBalance(string, lengthOfTheString);
-    printf("%s\n", result ? "true" : "false");
+    char string[100];
+    printf("Продвинутый баланс скобок.\n");
+    printf("Введите строку: ");
+    scanf("%s", string);
+    bool result = advancedBracketBalance(string);
+    printf("%s\n", result ? "Баланс скобок в порядке!" : "Кажт");
 }
