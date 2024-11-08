@@ -3,10 +3,14 @@ project(mergeSort C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(mergeSort main.c ../list/list.c)
+add_library(list list.c)
 
-include_directories(../list)
+add_executable(mergeSort main.c)
+target_link_libraries(mergeSort list)
 
-install(TARGETS mergeSort DESTINATION bin)
-
-install(FILES ../list/*.h DESTINATION include)
+#
+#include_directories(../list)
+#
+#install(TARGETS mergeSort DESTINATION bin)
+#
+#install(FILES ../list/*.h DESTINATION include)
