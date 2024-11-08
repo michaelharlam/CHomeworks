@@ -50,7 +50,7 @@ void mergeSort(List *list, int left, int right, int part) {
 
 int main() {
     List *list = initList();
-    append(list, "C", "3");
+    insertInBeginning(list, "C", "3");
     append(list, "A", "1");
     append(list, "D", "4");
     append(list, "B", "2");
