@@ -3,7 +3,7 @@ project(mergeSort C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(mergeSort mergeSort.c ../list/list.с)
+add_executable(mergeSort main.c ../list/list.c)
 
 include_directories(../list)
 
