@@ -22,6 +22,7 @@ void append(List *list, int value) {
         list->last = node;
         node->left = node;
         node->right = node;
+        list->size++;
         return;
     }
 
@@ -46,6 +47,9 @@ List* initList(void) {
 void removeFromList(List *list, Node *node) {
     node->left->right = node->right;
     node->right->left = node->left;
+    if (list->last == node) {
+        list->last = node->right;
+    }
     list->size--;
     free(node);
 }
