@@ -45,4 +45,5 @@ void disposeNode(Node *node) {
 
     disposeNode(node->leftChild);
     disposeNode(node->rightChild);
+    free(node);
 }
