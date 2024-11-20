@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include "parseTree.h"
+#include "expressionParser.h"
 
 
 typedef struct Node {
@@ -11,22 +11,12 @@ typedef struct Node {
     struct Node *rightChild;
 } Node;
 
-typedef struct Tree {
-    Node *root;
-} Tree;
-
 Node *createNode(char *value) {
     Node *newNode = malloc(sizeof(Node));
     newNode->value = strdup(value);
     newNode->leftChild = NULL;
     newNode->rightChild = NULL;
     return newNode;
-}
-
-Tree *createTree() {
-    Tree *newTree = malloc(sizeof(Tree));
-    newTree->root = NULL;
-    return newTree;
 }
 
 Node* buildTree(FILE *file) {
@@ -56,4 +46,49 @@ Node* buildTree(FILE *file) {
         Node *newNode = createNode(token);
         return newNode;
     }
+}
+
+void printTreeRecursive(Node *root) {
+    Node *currentNode = root;
+    if (isOperation(currentNode->value[0])) {
+        printf("( %c ", currentNode->value[0]);
+
+        printTreeRecursive(currentNode->leftChild);
+        printTreeRecursive(currentNode->rightChild);
+
+        printf(") ");
+    } else if (!isOperation(currentNode->value[0])) {
+        printf("%s ", currentNode->value);
+    }
+}
+
+void printTree(Node *root) {
+    printTreeRecursive(root);
+    printf("\n");
+}
+
+int treeCount(Node *root) {
+    Node *currentNode = root;
+    if (isOperation(currentNode->value[0])) {
+        int operand1 = treeCount(currentNode->leftChild);
+        int operand2 = treeCount(currentNode->rightChild);
+        return operationCalculator(currentNode->value[0], operand1, operand2);
+    }
+    return (int)strtol(currentNode->value, NULL, 10);
+}
+
+void deleteTree(Node* father, Node *root) {
+    if (root == NULL) {
+        return;
+    }
+
+    deleteTree(root, root->leftChild);
+    deleteTree(root, root->rightChild);
+
+    if (father->leftChild == root) {
+        father->leftChild = NULL;
+    } else if (father->rightChild == root) {
+        father->rightChild = NULL;
+    }
+    free(root);
 }
