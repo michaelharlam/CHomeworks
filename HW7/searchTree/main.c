@@ -10,7 +10,7 @@ void dictionary(void) {
     printf("3 - получить значение по ключу;\n4 - удалить ключ и значение по ключу.\n\n");
     printf("Введите команду: ");
 
-    int command;
+    int command = 0;
     scanf("%d", &command);
 
     Tree *map = createTree();
@@ -19,7 +19,7 @@ void dictionary(void) {
             break;
         } else if (command == 1) {
             printf("Введите ключ: ");
-            int key;
+            int key = 0;
             scanf("%d", &key);
 
             printf("Введите значение: ");
@@ -30,7 +30,7 @@ void dictionary(void) {
             printf("Ключ и значение добавлены в словарь.\n");
         } else if (command == 2) {
             printf("Введите ключ: ");
-            int key;
+            int key = 0;
             scanf("%d", &key);
 
             if (isAvailableKey(map, key)) {
@@ -40,7 +40,7 @@ void dictionary(void) {
             }
         } else if (command == 3) {
             printf("Введите ключ: ");
-            int key;
+            int key = 0;
             scanf("%d", &key);
 
             char *result = getValue(map, key);
@@ -51,11 +51,11 @@ void dictionary(void) {
             }
         } else if (command == 4) {
             printf("Введите ключ: ");
-            int key;
+            int key = 0;
             scanf("%d", &key);
 
-            bool availability = deleteKey(map, key);
-            if (availability) {
+            bool isAvailable = deleteKey(map, key);
+            if (isAvailable) {
                 printf("Ключ и значение удалены.\n");
             } else {
                 printf("Такого ключа нет в словаре.\n");
@@ -67,7 +67,7 @@ void dictionary(void) {
         scanf("%d", &command);
     }
 
-    deleteTree(map);
+    deleteTree(&map);
 }
 
 bool testOfAppendAndAvailability(void) {
@@ -83,7 +83,7 @@ bool testOfAppendAndAvailability(void) {
     bool availability = isAvailableKey(map, 100) && isAvailableKey(map, 50) && isAvailableKey(map, 175);
     bool absenceOfAvailability = isAvailableKey(map, 15) && isAvailableKey(map, 390);
 
-    deleteTree(map);
+    deleteTree(&map);
     return availability && !absenceOfAvailability;
 }
 
@@ -108,7 +108,7 @@ bool testOfAppendAndDelete(void) {
 
     bool deleteOfAbsenceNode = deleteKey(map, 3);
 
-    deleteTree(map);
+    deleteTree(&map);
     return !availabilityAfterDeleteOfNodeWithoutChildren && !availabilityAfterDeleteOfNodeWithOneChild && !availabilityAfterDeleteOfRoot && !deleteOfAbsenceNode;
 }
 
@@ -126,17 +126,17 @@ bool testOfGettingValue(void) {
     bool equalityOfValueWithKey50 = strcmp(valueWithKey50, "bbb") == 0;
     bool equalityOfValueWithKey150 = strcmp(valueWithKey150, "ccc") == 0;
 
-    deleteTree(map);
+    deleteTree(&map);
     return equalityOfValueWithKey50 && equalityOfValueWithKey150 && equalityOfValueWithKey100;
 }
 
-bool testCollector(void) {
+bool runTests(void) {
     bool result = testOfAppendAndAvailability() && testOfAppendAndDelete() && testOfGettingValue();
     return result;
 }
 
 int main(void) {
-    if (!testCollector()) {
+    if (!runTests()) {
         return 1;
     }
 

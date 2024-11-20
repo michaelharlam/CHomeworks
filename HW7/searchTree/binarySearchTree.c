@@ -23,8 +23,7 @@ typedef struct Tree {
 } Tree;
 
 Key createKey(int key) {
-    Key newKey;
-    newKey.key = key;
+    Key newKey = {.key = key};
     return newKey;
 }
 
@@ -43,7 +42,13 @@ Node *createNode(int key, char *value) {
     newNode->value = *newValue;
     newNode->leftChild = NULL;
     newNode->rightChild = NULL;
+    free(newValue);
     return newNode;
+}
+
+void freeNode(Node *node) {
+    free(node->value.value);
+    free(node);
 }
 
 Tree *createTree() {
@@ -69,7 +74,9 @@ void append(Tree *tree, int key, char *value) {
 
     while (root != NULL) {
         if (getKey(root) == key) {
-            root->value.value = value;
+            free(root->value.value);
+            root->value.value = strdup(value);
+            freeNode(node);
             return;
         } else if (getKey(root) < key) {
             father = root;
@@ -173,7 +180,7 @@ bool deleteKey(Tree *tree, int key) {
         }
     }
 
-    free(root);
+    freeNode(root);
     return true;
 }
 
@@ -190,12 +197,14 @@ void deleteTreeByRoot(Node* father, Node *root) {
     } else if (father->rightChild == root) {
         father->rightChild = NULL;
     }
-    free(root);
+    freeNode(root);
 }
 
-void deleteTree(Tree *tree) {
-    Node *root = tree->root;
-    Node *father = tree->root;
+void deleteTree(Tree **tree) {
+    Node *root = (*tree)->root;
+    Node *father = (*tree)->root;
 
     deleteTreeByRoot(father, root);
+
+    *tree = NULL;
 }

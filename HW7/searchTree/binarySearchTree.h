@@ -1,13 +1,10 @@
 #pragma once
-#ifndef BINARYSEARCHTREE_H
-#define BINARYSEARCHTREE_H
+
 #include <stdbool.h>
 
 typedef struct Value Value;
 
 typedef struct Key Key;
-
-typedef struct Node Node;
 
 typedef struct Tree Tree;
 
@@ -21,6 +18,4 @@ bool isAvailableKey(Tree *tree, int key);
 
 bool deleteKey(Tree *tree, int key);
 
-void deleteTree(Tree *tree);
-
-#endif
+void deleteTree(Tree **tree);
