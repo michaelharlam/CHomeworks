@@ -51,7 +51,8 @@ void dictionary(void) {
             printf("Введите ключ: ");
             scanf("%s", &key);
 
-            bool isAvailable = deleteKey(&map, key);
+            deleteKey(&map, key);
+            bool isAvailable = isAvailableKey(map, key);
             if (isAvailable) {
                 printf("Ключ и значение удалены.\n");
             } else {
@@ -103,10 +104,10 @@ bool testOfAppendAndDelete(void) {
     deleteKey(&map, "100");
     bool availabilityAfterDeleteOfRoot = isAvailableKey(map, "100");
 
-    bool deleteOfAbsenceNode = deleteKey(&map, "003");
+    deleteKey(&map, "003");
 
     deleteTree(&map);
-    return !availabilityAfterDeleteOfNodeWithoutChildren && !availabilityAfterDeleteOfNodeWithOneChild && !availabilityAfterDeleteOfRoot && !deleteOfAbsenceNode;
+    return !availabilityAfterDeleteOfNodeWithoutChildren && !availabilityAfterDeleteOfNodeWithOneChild && !availabilityAfterDeleteOfRoot;
 }
 
 bool testOfGettingValue(void) {

@@ -16,6 +16,6 @@ char *getValue(Tree *tree, const char *key);
 
 bool isAvailableKey(Tree *tree, const char *key);
 
-bool deleteKey(Tree **tree, const char *key);
+void deleteKey(Tree **tree, const char *key);
 
 void deleteTree(Tree **tree);

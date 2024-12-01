@@ -38,6 +38,10 @@ int getHeight(Node *node) {
     return node->height;
 }
 
+int maximum(const int number1, const int number2) {
+    return number1 > number2 ? number1 : number2;
+}
+
 Node *leftRotate(Node **node) {
     Node *rightChild = (*node)->rightChild;
     (*node)->rightChild = rightChild->leftChild;
@@ -143,7 +147,7 @@ void append(Tree *tree, const char *key, const char *value) {
 char *getValue(Tree *tree, const char *key) {
     Node *root = tree->root;
     while (root != NULL) {
-        if (strcmp(root->key, key) < 0) {
+        if (strcmp(root->key, key) == 0) {
             return root->value;
         }
         if (strcmp(root->key, key) < 0) {
@@ -169,68 +173,95 @@ bool isAvailableKey(Tree *tree, const char *key) {
     return false;
 }
 
-bool deleteNode(Node *father, Node *node, const char *key) {
-    if (node == NULL) {
-        return false;
+void freeNode(Node **node) {
+    Node* temp = *node;
+    *node = NULL;
+    free(temp);
+}
+
+Node *deleteNode(Node **father, Node **node, const char *key) {
+    if (*node == NULL) {
+        return NULL;
     }
 
-    if (strcmp(node->key, key) == 0) {
-        if ((node->leftChild == NULL) && (node->rightChild == NULL)) {
-            if (father->leftChild == node) {
-                father->leftChild = NULL;
-            } else if (father->rightChild == node) {
-                father->rightChild = NULL;
+    if (strcmp((*node)->key, key) == 0) {
+        Node *result = NULL;
+        if (((*node)->leftChild == NULL) && ((*node)->rightChild == NULL)) {
+            if ((*father) == (*node)) {
+                (*father) = NULL;
+            } else if ((*father)->leftChild == *node) {
+                (*father)->leftChild = NULL;
+            } else if ((*father)->rightChild == *node) {
+                (*father)->rightChild = NULL;
             }
-        } else if (node->leftChild == NULL) {
-            if (father->leftChild == node) {
-                father->leftChild = node->rightChild;
-            } else if (father->rightChild == node) {
-                father->rightChild = node->rightChild;
+            freeNode(node);
+        } else if ((*node)->leftChild == NULL) {
+            if ((*father) == (*node)) {
+                (*father) = (*node)->rightChild;
+            } else if ((*father)->leftChild == *node) {
+                (*father)->leftChild = (*node)->rightChild;
+            } else if ((*father)->rightChild == *node) {
+                (*father)->rightChild = (*node)->rightChild;
             }
-        } else if (node->rightChild == NULL) {
-            if (father->leftChild == node) {
-                father->leftChild = node->leftChild;
-            } else if (father->rightChild == node) {
-                father->rightChild = node->leftChild;
+            freeNode(node);
+        } else if ((*node)->rightChild == NULL) {
+            if ((*father) == (*node)) {
+                (*father) = (*node)->leftChild;
+            } else if ((*father)->leftChild == *node) {
+                (*father)->leftChild = (*node)->leftChild;
+            } else if ((*father)->rightChild == *node) {
+                (*father)->rightChild = (*node)->leftChild;
             }
+            freeNode(node);
         } else {
-            Node *nodeRightChildFather = node->rightChild;
-            Node *nodeRightChild = node->rightChild;
+            Node *nodeRightChildFather = (*node)->rightChild;
+            Node *nodeRightChild = (*node)->rightChild;
             while ((nodeRightChild->leftChild != NULL) ) {
                 nodeRightChildFather = nodeRightChild;
                 nodeRightChild = nodeRightChild->leftChild;
             }
             if (nodeRightChildFather != nodeRightChild) {
-                nodeRightChildFather->leftChild = nodeRightChild->leftChild;
+                nodeRightChildFather->leftChild = NULL;
             }
-            nodeRightChild->leftChild = node->leftChild;
-            nodeRightChild->rightChild = node->rightChild;
-            if (father->leftChild == node) {
-                father->leftChild = nodeRightChild;
-            } else if (father->rightChild == node) {
-                father->rightChild = nodeRightChild;
+            nodeRightChild->leftChild = (*node)->leftChild;
+            nodeRightChild->rightChild = (*node)->rightChild != nodeRightChild ? (*node)->rightChild: NULL;
+            if ((*father) == (*node)) {
+                freeNode(node);
+                (*father) = nodeRightChild;
+            } else if ((*father)->leftChild == *node) {
+                freeNode(node);
+                (*father)->leftChild = nodeRightChild;
+            } else if ((*father)->rightChild == *node) {
+                freeNode(node);
+                (*father)->rightChild = nodeRightChild;
             }
+            result = nodeRightChild;
         }
-        free(node);
-        return true;
+        return result;
     } else {
-        bool isKeyInLeftBranch = deleteNode(node, node->leftChild, key);
-        bool isKeyInRightBranch = deleteNode(node, node->rightChild, key);
-        if (isKeyInLeftBranch || isKeyInRightBranch) {
-            node->height--;
-            return true;
+        Node *leftBranchNode = deleteNode(node, &((*node)->leftChild), key);
+        Node *rightBranchNode = deleteNode(node, &((*node)->rightChild), key);
+        if (leftBranchNode == NULL && rightBranchNode == NULL) {
+            (*node)->height = 1;
+        } else if ((leftBranchNode != NULL) && (rightBranchNode == NULL)) {
+            (*node)->height = leftBranchNode->height + 1;
+        } else if ((leftBranchNode == NULL) && (rightBranchNode != NULL)) {
+            (*node)->height = rightBranchNode->height + 1;
         } else {
-            return false;
+            (*node)->height = maximum(getHeight(leftBranchNode), getHeight(rightBranchNode)) + 1;
         }
+        return *node;
     }
 }
 
-bool deleteKey(Tree **tree, const char *key) {
+void deleteKey(Tree **tree, const char *key) {
     Node *root = (*tree)->root;
-    return deleteNode(root, root, key);
+    Node *newRoot = deleteNode(&root, &root, key);
+    (*tree)->root = newRoot;
+    balanceCheck(&newRoot);
 }
 
-void deleteTreeByRoot(Node* father, Node *root) {
+void deleteTreeByRoot(Node *father, Node *root) {
     if (root == NULL) {
         return;
     }
