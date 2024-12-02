@@ -10,3 +10,7 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
+.DS_Store
+cmake-build-debug
+External Libraries
+Scratches and Consoles
