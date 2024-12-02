@@ -20,7 +20,7 @@ void dictionary(void) {
             break;
         } else if (command == 1) {
             printf("Введите ключ: ");
-            scanf("%s", &key);
+            scanf("%s", key);
 
             printf("Введите значение: ");
             char *value = malloc(sizeof(char) * 100);
@@ -30,7 +30,7 @@ void dictionary(void) {
             printf("Ключ и значение добавлены в словарь.\n");
         } else if (command == 2) {
             printf("Введите ключ: ");
-            scanf("%s", &key);
+            scanf("%s", key);
 
             if (isAvailableKey(map, key)) {
                 printf("Значение по такому ключу содержится в словаре.\n");
@@ -39,9 +39,9 @@ void dictionary(void) {
             }
         } else if (command == 3) {
             printf("Введите ключ: ");
-            scanf("%s", &key);
+            scanf("%s", key);
 
-            char *result = getValue(map, key);
+            const char *result = getValue(map, key);
             if (result == NULL) {
                 printf("Такого ключа нет в словаре.\n");
             } else {
@@ -49,7 +49,7 @@ void dictionary(void) {
             }
         } else if (command == 4) {
             printf("Введите ключ: ");
-            scanf("%s", &key);
+            scanf("%s", key);
 
             deleteKey(&map, key);
             bool isAvailable = isAvailableKey(map, key);
@@ -116,9 +116,9 @@ bool testOfGettingValue(void) {
     append(map, "050", "bbb");
     append(map, "150", "ccc");
 
-    char *valueWithKey100 = getValue(map, "100");
-    char *valueWithKey50 = getValue(map, "050");
-    char *valueWithKey150 = getValue(map, "150");
+    const char *valueWithKey100 = getValue(map, "100");
+    const char *valueWithKey50 = getValue(map, "050");
+    const char *valueWithKey150 = getValue(map, "150");
 
     bool equalityOfValueWithKey100 = strcmp(valueWithKey100, "aaa") == 0;
     bool equalityOfValueWithKey50 = strcmp(valueWithKey50, "bbb") == 0;
@@ -133,11 +133,38 @@ bool runTests(void) {
     return result;
 }
 
+void streemOfNumbersTest(void) {
+    Tree* map = createTree();
+    append(map, "01", "aaa");
+    append(map, "02", "bbb");
+    append(map, "03", "ccc");
+    append(map, "04", "ddd");
+    append(map, "05", "eee");
+    append(map, "06", "fff");
+    append(map, "07", "ggg");
+    append(map, "08", "hhh");
+    append(map, "09", "iii");
+    append(map, "10", "jjj");
+    append(map, "11", "iii");
+    append(map, "12", "jjj");
+    append(map, "13", "iii");
+    append(map, "14", "jjj");
+    append(map, "15", "iii");
+    append(map, "16", "jjj");
+    append(map, "17", "iii");
+    append(map, "18", "jjj");
+    append(map, "19", "iii");
+    append(map, "20", "jjj");
+    append(map, "21", "jjj");
+}
+
 
 int main(void) {
-    if (!runTests()) {
+    /*if (!runTests()) {
         return 1;
     }
-    dictionary();
+    dictionary();*/
+    streemOfNumbersTest();
+    printf("aa");
     return 0;
 }

@@ -10,9 +10,10 @@ typedef struct Tree Tree;
 
 Tree *createTree(void);
 
+//function of appending an element
 void append(Tree *tree, const char *key, const char *value);
 
-char *getValue(Tree *tree, const char *key);
+const char *getValue(Tree *tree, const char *key);
 
 bool isAvailableKey(Tree *tree, const char *key);
 

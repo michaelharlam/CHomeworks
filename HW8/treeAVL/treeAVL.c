@@ -25,7 +25,7 @@ Node *createNode(const char *key, const char *value) {
     return newNode;
 }
 
-Tree *createTree() {
+Tree *createTree(void) {
     Tree *newTree = malloc(sizeof(Tree));
     newTree->root = NULL;
     return newTree;
@@ -113,11 +113,13 @@ int appendRecursive(Node **node, Node *newNode) {
         return (*node)->height;
     } else if (strcmp((*node)->key, newNode->key) > 0) {
         childHeight = appendRecursive(&((*node)->leftChild), newNode);
+        *node = balanceCheck(node);
         if ((*node)->leftChild == NULL) {
             (*node)->leftChild = newNode;
         }
     } else {
         childHeight = appendRecursive(&((*node)->rightChild), newNode);
+        *node = balanceCheck(node);
         if ((*node)->rightChild == NULL) {
             (*node)->rightChild = newNode;
         }
@@ -144,7 +146,7 @@ void append(Tree *tree, const char *key, const char *value) {
     tree->root = newRoot;
 }
 
-char *getValue(Tree *tree, const char *key) {
+const char *getValue(Tree *tree, const char *key) {
     Node *root = tree->root;
     while (root != NULL) {
         if (strcmp(root->key, key) == 0) {
