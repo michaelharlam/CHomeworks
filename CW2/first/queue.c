@@ -31,9 +31,11 @@ void enQueue(Queue *queue, int value) {
                 queue->arrayOfElements[i - (queue->tail + 1)] = queue->arrayOfElements[i];
             }
             for (int i = 0; i <= (queue->tail); ++i) {
-                queue->arrayOfElements[i + queue->sizeOfArray - 1 - (queue->tail + 1)] = bufferArray[i];
+                queue->arrayOfElements[i + queue->sizeOfArray - (queue->tail + 1)] = bufferArray[i];
             }
             free(bufferArray);
+            queue->head = 0;
+            queue->tail = queue->sizeOfArray - 1;
         }
         queue->arrayOfElements = realloc(queue->arrayOfElements, sizeof(int) * queue->sizeOfArray * 2);
         queue->sizeOfArray *= 2;
