@@ -15,9 +15,9 @@ void insertBefore(List *list, Node *node, Node *newNode);
 
 void insertInBeginning(List *list, Node *newNode);
 
-void append(List *list, Node *newNode);
+void append(List *list, const char *key, int value);
 
-void appendCopy(List *list, Node *node);
+void appendCopy(List *list, const char *key, int value);
 
 void removeFromList(List *list, Node *node);
 
@@ -31,8 +31,10 @@ int getSize(List *list);
 
 void freeList(List *list);
 
-char *getKey(Node *node);
+const char *getKey(Node *node);
 
 int getValue(Node *node);
+
+void changeValue(Node *node, int value);
 
 #endif //LIST_H

@@ -33,7 +33,7 @@ Node* createNode(const char *key, const int value) {
         printf("wtf ");
     }
     node->value = value;
-    strcpy(node->key, key);
+    node->key = strdup(key);
     node->left = NULL;
     node->right = NULL;
     return node;
@@ -73,7 +73,8 @@ void insertInBeginning(List *list, Node *newNode) {
     list->size++;
 }
 
-void append(List *list, Node *newNode) {
+void append(List *list, const char *key, int value) {
+    Node *newNode = createNode(key, value);
     newNode->right = NULL;
     newNode->left = list->last;
     if (list->last != NULL) {
@@ -85,13 +86,13 @@ void append(List *list, Node *newNode) {
     list->size++;
 }
 
-void appendCopy(List *list, Node *node) {
+void appendCopy(List *list, const char *key, int value) {
     Node *newNode = malloc(sizeof(Node));
-    newNode->value = node->value;
-    newNode->key = node->key;
+    newNode->value = value;
+    newNode->key = key;
     newNode->left = NULL;
     newNode->right = NULL;
-    append(list, newNode);
+    append(list, key, value);
 }
 
 void removeFromList(List *list, Node *node) {
@@ -131,10 +132,14 @@ int getSize(List *list) {
     return list->size;
 }
 
-char *getKey(Node *node) {
+const char *getKey(Node *node) {
     return node->key;
 }
 
 int getValue(Node *node) {
     return node->value;
+}
+
+void changeValue(Node *node, int value) {
+    node->value = value;
 }

@@ -10,4 +10,8 @@ add_executable(hashTable
         list.c
         list.h
         fileReader.c
-        fileReader.h)
+        fileReader.h
+        tests.c
+        tests.h
+        textParser.c
+        textParser.h)

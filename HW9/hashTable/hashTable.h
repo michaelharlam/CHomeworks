@@ -1,14 +1,23 @@
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
+#include "list.h"
 
-typedef struct hashTable hashTable;
+typedef struct HashTable HashTable;
 
-hashTable *createHashTable(void);
+HashTable *createHashTable(void);
 
 int hashFunction(const char *key);
 
-void printTable(hashTable *hashTable);
+void printTable(HashTable *hashTable);
 
-void appendToTable(hashTable **hashTable, const char *key, int value);
+void appendToTable(HashTable **hashTable, const char *key, int value);
+
+List **getTable(HashTable *HashTable);
+
+int maxLengthOfList(HashTable *HashTable);
+
+float averageLengthOfList(HashTable *HashTable);
+
+float occupancyRate(HashTable *HashTable);
 
 #endif

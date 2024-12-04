@@ -10,12 +10,12 @@ bool fileReader(char *array, int *arrayLength, char *fileName) {
         return false;
     }
     char i = 0;
-    fscanf(arrayFile, "%c\n", &array[i]);
-    while (array[i] != EOF) {
-        fscanf(arrayFile, "%c\n", &array[i]);
-        ++i;
+    array[i++] = fgetc(arrayFile);
+    while (array[i - 1] != -1) {
+        array[i++] = fgetc(arrayFile);
     }
-    *arrayLength = i + 1;
+    array[i - 1] = '\0';
+    *arrayLength = i - 1;
     fclose(arrayFile);
     return true;
 }
