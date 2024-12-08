@@ -25,7 +25,7 @@ Node *createNode(const char *key, const char *value) {
     return newNode;
 }
 
-Tree *createTree(void) {
+Tree *createTree() {
     Tree *newTree = malloc(sizeof(Tree));
     newTree->root = NULL;
     return newTree;
@@ -38,6 +38,10 @@ int getHeight(Node *node) {
     return node->height;
 }
 
+int getHeightOfTree(Tree *tree) {
+    return getHeight(tree->root);
+}
+
 int maximum(const int number1, const int number2) {
     return number1 > number2 ? number1 : number2;
 }
@@ -45,27 +49,27 @@ int maximum(const int number1, const int number2) {
 Node *leftRotate(Node **node) {
     Node *rightChild = (*node)->rightChild;
     (*node)->rightChild = rightChild->leftChild;
-    (*node)->height = rightChild->height;
+    (*node)->height = maximum(getHeight((*node)->leftChild), getHeight((*node)->rightChild)) + 1;
     rightChild->leftChild = (*node);
+    rightChild->height = maximum(getHeight(rightChild->leftChild), getHeight(rightChild->rightChild)) + 1;
 
-    //rightChild->height;
     return rightChild;
 }
 
 Node *rightRotate(Node **node) {
     Node *leftChild = (*node)->leftChild;
     (*node)->leftChild = leftChild->rightChild;
-    (*node)->height = leftChild->height;
+    (*node)->height = maximum(getHeight((*node)->leftChild), getHeight((*node)->rightChild)) + 1;
     leftChild->rightChild = (*node);
+    leftChild->height = maximum(getHeight(leftChild->leftChild), getHeight(leftChild->rightChild)) + 1;
 
-    //leftChild->height;
     return leftChild;
 }
 
 Node *leftRightRotate(Node **node) {
     Node *leftChild = leftRotate(&((*node)->leftChild));
     (*node)->leftChild = leftChild;
-    Node *newNode = rightRotate(&(*node));
+    Node *newNode = rightRotate(node);
 
     return newNode;
 }
@@ -73,7 +77,7 @@ Node *leftRightRotate(Node **node) {
 Node *rightLeftRotate(Node **node) {
     Node *rightChild = rightRotate(&((*node)->leftChild));
     (*node)->rightChild = rightChild;
-    Node *newNode = leftRotate(&(*node));
+    Node *newNode = leftRotate(node);
 
     return newNode;
 }
@@ -87,7 +91,7 @@ int balanceFactor(Node *node) {
 
 Node *balanceCheck(Node **node) {
     int rootBalance = balanceFactor(*node);
-    Node *root = NULL;
+    Node *root = *node;
     if ((rootBalance == 2) && (balanceFactor((*node)->rightChild) >= 0)) {
         root = leftRotate(node);
     } else if((rootBalance == -2) && (balanceFactor((*node)->leftChild) <= 0)) {
@@ -100,50 +104,44 @@ Node *balanceCheck(Node **node) {
     return root;
 }
 
-int appendRecursive(Node **node, Node *newNode) {
+Node *appendRecursive(Node **node, Node *newNode) {
     if (*node == NULL) {
         *node = newNode;
-        return (*node)->height;
+        return *node;
     }
 
-    int childHeight = 1;
+    Node *nextNode = NULL;
     if (strcmp((*node)->key, newNode->key) == 0) {
         (*node)->value = strdup(newNode->value);
         free(newNode);
-        return (*node)->height;
+        return *node;
     } else if (strcmp((*node)->key, newNode->key) > 0) {
-        childHeight = appendRecursive(&((*node)->leftChild), newNode);
-        *node = balanceCheck(node);
+        nextNode = appendRecursive(&((*node)->leftChild), newNode);
         if ((*node)->leftChild == NULL) {
             (*node)->leftChild = newNode;
         }
     } else {
-        childHeight = appendRecursive(&((*node)->rightChild), newNode);
-        *node = balanceCheck(node);
+        nextNode = appendRecursive(&((*node)->rightChild), newNode);
         if ((*node)->rightChild == NULL) {
             (*node)->rightChild = newNode;
         }
     }
 
     if((*node)->leftChild != NULL || (*node)->rightChild != NULL) {
-        (*node)->height = childHeight + 1;
+        (*node)->height = nextNode->height + 1;
     }
-    return (*node)->height;
+
+    (*node) = balanceCheck(node);
+    return *node;
 }
 
 void append(Tree *tree, const char *key, const char *value) {
-    Node *newNode = createNode(key, value);
-    Node *node = tree->root;
-    if (node == NULL) {
+    Node *newNode = createNode(key, value);;
+    if (tree->root == NULL) {
         tree->root = newNode;
     } else {
-        appendRecursive(&node, newNode);
+        tree->root = appendRecursive(&(tree->root), newNode);
     }
-    Node *newRoot = balanceCheck(&(tree->root));
-    if (newRoot == NULL) {
-        return;
-    }
-    tree->root = newRoot;
 }
 
 const char *getValue(Tree *tree, const char *key) {
@@ -239,7 +237,7 @@ Node *deleteNode(Node **father, Node **node, const char *key) {
             }
             result = nodeRightChild;
         }
-        return result;
+        return balanceCheck(&result);
     } else {
         Node *leftBranchNode = deleteNode(node, &((*node)->leftChild), key);
         Node *rightBranchNode = deleteNode(node, &((*node)->rightChild), key);
@@ -252,7 +250,7 @@ Node *deleteNode(Node **father, Node **node, const char *key) {
         } else {
             (*node)->height = maximum(getHeight(leftBranchNode), getHeight(rightBranchNode)) + 1;
         }
-        return *node;
+        return balanceCheck(node);
     }
 }
 
@@ -276,7 +274,7 @@ void deleteTreeByRoot(Node *father, Node *root) {
     } else if (father->rightChild == root) {
         father->rightChild = NULL;
     }
-    free(root);
+    freeNode(&root);
 }
 
 void deleteTree(Tree **tree) {

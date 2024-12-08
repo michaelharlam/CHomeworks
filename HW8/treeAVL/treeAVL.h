@@ -10,7 +10,8 @@ typedef struct Tree Tree;
 
 Tree *createTree(void);
 
-//function of appending an element
+int getHeightOfTree(Tree *tree);
+
 void append(Tree *tree, const char *key, const char *value);
 
 const char *getValue(Tree *tree, const char *key);
