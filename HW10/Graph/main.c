@@ -1,6 +1,8 @@
 #include "states.h"
+#include "hashTable.h"
 
 
 int main(void) {
-    states("testfile.txt");
+    HashTable *statesOnGraph = states("testfile.txt");
+    destroyHashTable(&statesOnGraph);
 }

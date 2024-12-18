@@ -63,3 +63,17 @@ void removeVertex(Graph *graph, int vertex) {
         graph->table[i][vertex] = 0;
     }
 }
+
+void destroyGraph(Graph *graph) {
+    for (int i = 0; i < graph->vertices; ++i) {
+        free(graph->table[i]);
+    }
+    free(graph->table);
+    free(graph);
+}
+
+void destroyWorld(World *world) {
+    free(world->map);
+    free(world->capitals);
+    free(world);
+}

@@ -1,3 +1,6 @@
 #pragma once
+#include "hashTable.h"
 
-void states(const char *fileName);
+int nearestVertex(int **table, int countOfVertices, int vertex);
+
+HashTable *states(const char *fileName);

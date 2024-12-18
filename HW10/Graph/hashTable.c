@@ -71,35 +71,14 @@ int *getValueFromTable(HashTable *HashTable, int key) {
     return 0;
 }
 
-int maxLengthOfList(HashTable *HashTable) {
-    int maxLength = 0;
+void destroyHashTable(HashTable **HashTable) {
     for (int i = 0; i < 256; ++i) {
-        List *list = HashTable->table[i];
-        if (getSize(list) > maxLength) {
-            maxLength = getSize(list);
+        List *hashNode = (*HashTable)->table[i];
+        for (Node *node = first(hashNode); node != NULL; node = next(node)) {
+            Node *nextNode = next(node);
+            free(nextNode);
         }
+        free(hashNode);
     }
-    return maxLength;
-}
-
-float averageLengthOfList(HashTable *HashTable) {
-    int sumOfLengths = 0;
-    int countOfNotEmptyLists = 0;
-    for (int i = 0; i < 256; ++i) {
-        List *list = HashTable->table[i];
-        if (getSize(list) != 0) {
-            ++countOfNotEmptyLists;
-            sumOfLengths += getSize(list);
-        }
-    }
-    return (float)sumOfLengths / (float)countOfNotEmptyLists;
-}
-
-float occupancyRate(HashTable *HashTable) {
-    int countOfElements = 0;
-    for (int i = 0; i < 256; ++i) {
-        List *list = HashTable->table[i];
-        countOfElements += getSize(list);
-    }
-    return (float)countOfElements / (float)256;
+    free(*HashTable);
 }

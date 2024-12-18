@@ -17,14 +17,6 @@ int minimumIndex(int *vertices, int size) {
     return minimumIndex;
 }
 
-int sumOfArray(int *array, int size) {
-    int sum = 0;
-    for (int i = 0; i < size; i++) {
-        sum += array[i];
-    }
-    return sum;
-}
-
 int nearestVertex(int **table, int countOfVertices, int vertex) {
     int *distance = calloc(countOfVertices, sizeof(int));
 
@@ -42,25 +34,7 @@ int nearestVertex(int **table, int countOfVertices, int vertex) {
 }
 
 
-int minimumDistanceToFreeCity(int *distances, int *closedRoads, int countOfCities) {
-    int minimumDistance = BILLION;
-    for (int i = 0; i < countOfCities; i++) {
-        if ((distances[i] < minimumDistance) && (closedRoads[i] == 0)) {
-            minimumDistance = distances[i];
-        }
-    }
-    return minimumDistance;
-}
-
-int *arrayCopy(int *array, int size) {
-    int *newArray = malloc(size * sizeof(int));
-    for (int i = 0; i < size; i++) {
-        newArray[i] = array[i];
-    }
-    return newArray;
-}
-
-void states(const char *fileName) {
+HashTable *states(const char *fileName) {
     World *world = fileReader(fileName);
     Graph *map = getMap(world);
     int **mapTable = getTable(map);
@@ -99,4 +73,6 @@ void states(const char *fileName) {
     }
 
     printTable(states, countOfVertices);
+    destroyWorld(world);
+    return states;
 }

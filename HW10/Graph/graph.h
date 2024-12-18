@@ -21,3 +21,7 @@ int **getTable(Graph *graph);
 int getCountOfVertices(Graph *graph);
 
 void removeVertex(Graph *graph, int vertex);
+
+void destroyGraph(Graph *graph);
+
+void destroyWorld(World *world);
