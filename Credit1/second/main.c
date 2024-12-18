@@ -1,6 +1,7 @@
-#include <stdio.h>
-#include "queue.h"
+#include "tests.h"
 
 int main(void) {
-    printf("Hello, World!\n");
+    if (!runTests()) {
+        return 1;
+    }
 }

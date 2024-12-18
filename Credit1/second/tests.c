@@ -44,4 +44,17 @@ bool enqueueAndDequeueTestWithQueue(void) {
     Queue *queue = createQueue();
     enqueue(queue, 10);
     enqueue(queue, 20);
+    enqueue(queue, 30);
+    bool first = dequeue(queue) == 10;
+    bool second = dequeue(queue) == 20;
+    bool third = dequeue(queue) == 30;
+    if (first && second && third) {
+        return true;
+    }
+    printf("Test case failed on dequeueAndDequeueWithQueue()\n");
+    return false;
+}
+
+bool runTests(void) {
+    return pushAndPopTestWithStack() && isEmptyTestWithStack() && enqueueAndDequeueTestWithQueue();
 }
