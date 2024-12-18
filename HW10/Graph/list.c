@@ -6,9 +6,9 @@
 
 typedef struct Node {
     int key;
-    int *data;
-    Node *left;
-    Node *right;
+    int *value;
+    struct Node *left;
+    struct Node *right;
 } Node;
 
 typedef struct List {
@@ -26,17 +26,17 @@ List* initList(void) {
     return list;
 }
 
-Node* createNode(int key, int **data) {
+Node* createNode(int key, int **value) {
     Node *node = malloc(sizeof(Node));
+    node->value = *value;
     node->key = key;
-    node->data = (*data);
     node->left = NULL;
     node->right = NULL;
     return node;
 }
 
-void append(List *list, int key, int **value) {
-    Node *newNode = createNode(key, value);
+void append(List *list, int key, int *value) {
+    Node *newNode = createNode(key, &value);
     newNode->right = NULL;
     newNode->left = list->last;
     if (list->last != NULL) {
@@ -89,10 +89,14 @@ int getKey(Node *node) {
     return node->key;
 }
 
-int *getData(Node *node) {
-    return node->data;
+int *getValue(Node *node) {
+    return node->value;
 }
 
-void changeData(Node *node, int **data) {
-    node->data = (*data);
+void changeValue(Node *node, int *value) {
+    node->value = value;
+}
+
+void addOneToValue(Node *node, int index) {
+    node->value[index] = 1;
 }

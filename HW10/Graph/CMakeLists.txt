@@ -9,10 +9,11 @@ add_executable(Graph
         graph.h
         fileReader.c
         fileReader.h
-        algorithmOfDijkstra.c
-        algorithmOfDijkstra.h
         tests.c
         tests.h
         states.c
         list.c
-        list.h)
+        list.h
+        hashTable.c
+        hashTable.h
+        states.h)

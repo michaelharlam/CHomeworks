@@ -6,9 +6,9 @@ typedef struct List List;
 
 List* initList(void);
 
-Node* createNode(int key, int **data);
+Node* createNode(int key, int **value);
 
-void append(List *list, int key, int **value);
+void append(List *list, int key, int *value);
 
 void removeFromList(List *list, Node *node);
 
@@ -18,12 +18,14 @@ Node *first(List *list);
 
 Node *last(List *list);
 
-void freeList(List *list);
-
 int getSize(List *list);
+
+void freeList(List *list);
 
 int getKey(Node *node);
 
-int *getData(Node *node);
+int *getValue(Node *node);
 
-void changeData(Node *node, int **data);
+void changeValue(Node *node, int *value);
+
+void addOneToValue(Node *node, int index);
