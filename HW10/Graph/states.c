@@ -89,10 +89,10 @@ void states(const char *fileName) {
                     }
                 }
             }
-            for (int vertex = 0; vertex < countOfVertices; vertex++) {
-                mapTable[capitals[j]][vertex] = 0;
-            }
             if (nearestCityForState != BILLION) {
+                for (int vertex = 0; vertex < countOfVertices; vertex++) {
+                    mapTable[vertex][nearestCityForState] = 0;
+                }
                 addToTableValue(&states, capitals[j], nearestCityForState);
             }
         }
