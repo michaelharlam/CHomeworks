@@ -1,4 +1,4 @@
 #pragma once
 #include "graph.h"
 
-int *algorithmOfDijkstra(Graph *graph, int countOfVertices, int vertex);
+int *algorithmOfDijkstraStep(Graph *graph, int countOfVertices, int vertex);

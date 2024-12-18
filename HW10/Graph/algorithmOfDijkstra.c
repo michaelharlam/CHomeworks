@@ -34,7 +34,7 @@ int sumOfArray(int *array, int size) {
     return sum;
 }
 
-int *algorithmOfDijkstra(Graph *graph, int countOfVertices, int vertex) {
+int *algorithmOfDijkstraStep(Graph *graph, int countOfVertices, int vertex) {
     int **table = getTable(graph);
     int *distance = malloc(countOfVertices * sizeof(int));
     int *visitedVertices = malloc(countOfVertices * sizeof(int));
@@ -44,18 +44,16 @@ int *algorithmOfDijkstra(Graph *graph, int countOfVertices, int vertex) {
     }
     distance[vertex] = 0;
     int currentVertex = indexOfUnvisitedVertexWithMinimumDistance(distance, visitedVertices, countOfVertices);
-    while (sumOfArray(visitedVertices, countOfVertices) < countOfVertices) {
-        for (int i = 0; i < countOfVertices; i++) {
-            if (table[currentVertex][i] == 0) {
-                continue;
-            }
-            if ((distance[currentVertex] + table[currentVertex][i]) < distance[i]) {
-                distance[i] = distance[currentVertex] + table[currentVertex][i];
-            }
+    for (int i = 0; i < countOfVertices; i++) {
+        if (table[currentVertex][i] == 0) {
+            continue;
         }
-        visitedVertices[currentVertex] = 1;
-        currentVertex = indexOfUnvisitedVertexWithMinimumDistance(distance, visitedVertices, countOfVertices);
+        if ((distance[currentVertex] + table[currentVertex][i]) < distance[i]) {
+            distance[i] = distance[currentVertex] + table[currentVertex][i];
+        }
     }
+    visitedVertices[currentVertex] = 1;
+    currentVertex = indexOfUnvisitedVertexWithMinimumDistance(distance, visitedVertices, countOfVertices);
     free(visitedVertices);
     return distance;
 }
