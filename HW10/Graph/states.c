@@ -9,7 +9,7 @@ int minimumIndex(int *vertices, int size) {
     int minimum = BILLION;
     int minimumIndex = size + 1;
     for (int i = 0; i < size; i++) {
-        if (vertices[i] < minimum) {
+        if ((vertices[i] < minimum) && (vertices[i] != 0)) {
             minimum = vertices[i];
             minimumIndex = i;
         }
@@ -26,7 +26,7 @@ int sumOfArray(int *array, int size) {
 }
 
 int nearestVertex(int **table, int countOfVertices, int vertex) {
-    int *distance = malloc(countOfVertices * sizeof(int));
+    int *distance = calloc(countOfVertices, sizeof(int));
 
     for (int i = 0; i < countOfVertices; i++) {
         if (table[vertex][i] != 0) {
@@ -35,6 +35,9 @@ int nearestVertex(int **table, int countOfVertices, int vertex) {
     }
     int nearestVertex = minimumIndex(distance, countOfVertices);
     free(distance);
+    if (nearestVertex == countOfVertices + 1) {
+        return -1;
+    }
     return nearestVertex;
 }
 
@@ -71,22 +74,27 @@ void states(const char *fileName) {
         appendToTable(&states, capitals[i], cities);
     }
 
-    for (int i = 0; i < ((countOfVertices - countOfCapitals) / countOfCapitals + 1); i++) {
+    for (int i = countOfCapitals; i < (countOfVertices + 1); i++) {
         for (int j = 0; j < countOfCapitals; j++) {
             int nearestCityForState = BILLION;
             int *cities = getValueFromTable(states, capitals[j]);
             for (int city = 0; city < countOfVertices; city++) {
-                if (cities[i] == 1) {
+                if (cities[city] == 1) {
                     int nearestCity = nearestVertex(mapTable, countOfVertices, city);
+                    if (nearestCity == -1) {
+                        continue;
+                    }
                     if (nearestCity < nearestCityForState) {
                         nearestCityForState = nearestCity;
                     }
                 }
             }
             for (int vertex = 0; vertex < countOfVertices; vertex++) {
-                mapTable[i][vertex] = 0;
+                mapTable[capitals[j]][vertex] = 0;
             }
-            addToTableValue(&states, capitals[i], nearestCityForState);
+            if (nearestCityForState != BILLION) {
+                addToTableValue(&states, capitals[j], nearestCityForState);
+            }
         }
     }
 
