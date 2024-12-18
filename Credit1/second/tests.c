@@ -48,6 +48,7 @@ bool enqueueAndDequeueTestWithQueue(void) {
     bool first = dequeue(queue) == 10;
     bool second = dequeue(queue) == 20;
     bool third = dequeue(queue) == 30;
+    destroyQueue(queue);
     if (first && second && third) {
         return true;
     }
