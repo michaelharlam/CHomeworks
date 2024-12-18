@@ -1,0 +1,6 @@
+# ninja log v6
+3	142	1733081569592233777	CMakeFiles/treeAVL.dir/main.c.o	9e067ff730a63ec7
+2	41	1733092120476970995	CMakeFiles/treeAVL.dir/treeAVL.c.o	a8b6ace45a9fffbf
+41	67	1733092120516533959	treeAVL	3b8d2dcb9af37cdf
+3	44	1733092229857125862	CMakeFiles/treeAVL.dir/treeAVL.c.o	a8b6ace45a9fffbf
+44	68	1733092229897641292	treeAVL	3b8d2dcb9af37cdf
