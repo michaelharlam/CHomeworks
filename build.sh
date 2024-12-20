@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#set -e
 
 function buildAndTest {
   local project_path
