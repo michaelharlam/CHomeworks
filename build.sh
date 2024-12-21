@@ -7,6 +7,7 @@ function buildAndTest {
   local executable
   executable=$( basename "$project_path" )
 
+  ls
   echo "========================================================"
   echo "Building and testing project: $project_path ..."
   echo "========================================================"
@@ -25,66 +26,31 @@ function buildAndTest {
     if find $project_path -name "CMakeLists.txt"; then
       echo "Using CMake to build project"
       cd "$project_path"
+      ls
       cmake .
       make
-      cd ..
 
       if [ $? -ne 0 ]; then
         echo "Error: compilation failed in project $project_path"
         return 1
       fi
 
-      echo "Running tests using ctest"
-      cd "$project_path"
-      ctest
-      cd ..
-      if [ $? -ne 0 ]; then
-        echo "Tests failed in project: $project_path"
+      "$project_path/cmake-build-debug/$executable"
+
+      run=$?
+
+      if [ $run -ne 0 ]; then
+        echo "Tests failed in project $project_path "
+        cd ../..
+        return 1
       else
-        echo "Tests passed in project: $project_path"
+        echo "Tests passed in project $project_path"
+        cd ../..
+        return 0
       fi
     else
-      echo "Compiling C source files in $project_path ..."
-
-      clang $source_file -o "$project_path/$executable"
-
-      if [ $? -ne 0 ]; then
-        echo "Error: Compilation failed in project $project_path"
-        return 1
-      fi
-
-      tests_file=$( find $project_path -name "tests")
-
-      if [ -f "$tests_file" ]; then
-        echo "Running tests using: $project_path"
-        "$tests_file"
-
-        test_result=$?
-
-        if [ $test_result -ne 0 ]; then
-          echo "Tests failed in project $project_path. Exit code: $test_result"
-          return 1
-        else
-          echo "Tests passed in project: $project_path"
-        fi
-      else
-        if [ -x "$project_path/$executable" ]; then
-          echo "Executing project: $project_path/$executable"
-          "$project_path/$executable"
-
-          test_result=$?
-
-          if [ $test_result -ne 0 ]; then
-            echo "Tests failed in project $project_path. Exit code: $test_result"
-            return 1
-          else
-            echo "Tests passed in project: $project_path"
-          fi
-        else
-          echo "Warning! No executable found"
-          return 0
-        fi
-      fi
+      echo "Warning! There is no CMake file in C project $project_path"
+      return 1
     fi
   fi
 }
