@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -e
 
 function buildAndTest {
   local project_path
@@ -29,13 +30,14 @@ function buildAndTest {
       ls
       cmake .
       make
+      mv "$executable" "cmake-build-debug"
 
       if [ $? -ne 0 ]; then
         echo "Error: compilation failed in project $project_path"
         return 1
       fi
 
-      "$project_path/cmake-build-debug/$executable"
+      "cmake-build-debug/$executable"
 
       run=$?
 
