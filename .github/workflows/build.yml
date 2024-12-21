@@ -1,0 +1,15 @@
+name: build.yml
+on: [push, pull_requests]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Set up C
+      uses: actions/setup-c@v1
+    - name: Make script executable
+      uses: chmod +x ./build.sh
+    - name: Run build script
+      uses: ./build.sh
