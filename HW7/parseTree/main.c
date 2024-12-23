@@ -18,7 +18,7 @@ void parseTreeInWork(void) {
     printTree(treeRoot);
 
     printf("Результат вычисления выражения: %d", treeCount(treeRoot));
-    deleteTree(treeRoot, treeRoot);
+    deleteTree(treeRoot);
 }
 
 bool simpleCountingTest(void) {
@@ -41,7 +41,7 @@ bool simpleCountingTest(void) {
     remove("test1.txt");
 
     int result = treeCount(treeRoot);
-    deleteTree(treeRoot, treeRoot);
+    deleteTree(treeRoot);
 
     if (result != 4) {
         printf("Simple counting test is failed.");
@@ -70,7 +70,7 @@ bool countingTestWithLongStrings(void) {
     remove("test2.txt");
 
     int result = treeCount(treeRoot);
-    deleteTree(treeRoot, treeRoot);
+    deleteTree(treeRoot);
 
     if (result != 417605) {
         printf("Counting test with long strings is failed.");
@@ -99,7 +99,7 @@ bool countingTestWithAllOfOperations(void) {
     remove("test3.txt");
 
     int result = treeCount(treeRoot);
-    deleteTree(treeRoot, treeRoot);
+    deleteTree(treeRoot);
 
     if (result != 66) {
         printf("Counting test with all of operators is failed.");

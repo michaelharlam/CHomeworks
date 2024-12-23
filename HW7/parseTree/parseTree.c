@@ -4,7 +4,6 @@
 #include "parseTree.h"
 #include "expressionParser.h"
 
-
 typedef struct Node {
     char *value;
     struct Node *leftChild;
@@ -37,18 +36,18 @@ Node* buildTree(FILE *file) {
         newNode->leftChild = buildTree(file);
         newNode->rightChild = buildTree(file);
 
-        symbol = getc(file);
-        return newNode;
-    } else {
-        int counter = 0;
-        while ((symbol != ' ') && (symbol != '(') && (symbol != ')')) {
-            token[counter++] = symbol;
-            symbol = getc(file);
-        }
-        ungetc(symbol, file);
-        Node *newNode = createNode(token);
+        getc(file);
         return newNode;
     }
+
+    int counter = 0;
+    while (symbol != ' ' && symbol != '(' && symbol != ')') {
+        token[counter++] = symbol;
+        symbol = getc(file);
+    }
+    ungetc(symbol, file);
+    Node *newNode = createNode(token);
+    return newNode;
 }
 
 void printTreeRecursive(Node *root) {
@@ -80,18 +79,14 @@ int treeCount(Node *root) {
     return (int)strtol(currentNode->value, NULL, 10);
 }
 
-void deleteTree(Node* father, Node *root) {
+void deleteTree(Node *root) {
     if (root == NULL) {
         return;
     }
 
-    deleteTree(root, root->leftChild);
-    deleteTree(root, root->rightChild);
+    deleteTree(root->leftChild);
+    deleteTree(root->rightChild);
 
-    if (father->leftChild == root) {
-        father->leftChild = NULL;
-    } else if (father->rightChild == root) {
-        father->rightChild = NULL;
-    }
+    free(root->value);
     free(root);
 }

@@ -11,4 +11,4 @@ void printTree(Node *node);
 
 int treeCount(Node *root);
 
-void deleteTree(Node* father, Node *root);
+void deleteTree(Node *root);
