@@ -1,6 +1,7 @@
 #include "../stack/stack.h"
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
 
 bool operationCheck(char symbol) {
     switch (symbol) {
@@ -46,7 +47,28 @@ int postfixCalculator(char *expression, int stringLength) {
     return pop(stackWithResults);
 }
 
-int main(void) {
+bool testForCalculator(void) {
     int result = postfixCalculator("75*56*-", 7);
+    if (result == 5) {
+        return true;
+    }
+    printf("Test failed.");
+    return false;
+}
+
+int main(void) {
+    if (!testForCalculator()) {
+        return 1;
+    }
+
+    printf("Введите выражение в постфиксной форме: ");
+    char expression[100] = { '\0' };
+    int scanfResult = scanf("%s", expression);
+    if (scanfResult != 1) {
+        printf("Invalid input.");
+        return 1;
+    }
+
+    int result = postfixCalculator(expression, strlen(expression));
     printf("%d\n", result);
 }
