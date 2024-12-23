@@ -1,24 +1,25 @@
 #include <stdio.h>
-#include <assert.h>
-#include <math.h>
+#include <stdlib.h>
 
-int incompleteQuotient(int numerator, int denominator) {
-    int dividend = 1, divider = 0, counter = 0;
-    int dividendSign = 1, dividerSign = 1, resultSign = 1;
+int incompleteQuotient(int dividend, int divider) {
+    int counter = 0;
+    int dividendSign = 1;
+    int dividerSign = 1;
+    int resultSign = 1;
     printf("Put the dividend and the divider:\n");
-    int result = scanf("%d%d", &dividend, &divider);
-    assert(result == 2);
 
-    if (dividend != fabs(dividend)) {
+    if (dividend != abs(dividend)) {
         dividendSign *= -1;
         dividend *= -1;
     }
-    if (divider != fabs(divider)) {
+    if (divider != abs(divider)) {
         dividerSign *= -1;
         divider *= -1;
     }
 
-    while (dividend >= divider) {
+    int cc = 0;
+
+    while (dividend <= divider) {
         dividend -= divider;
         counter += 1;
     }
@@ -31,29 +32,14 @@ int incompleteQuotient(int numerator, int denominator) {
 }
 
 int main(void) {
-    int dividend = 1, divider = 0, counter = 0;
-    int dividendSign = 1, dividerSign = 1, resultSign = 1;
+    int dividend = 1;
+    int divider = 0;
     printf("Put the dividend and the divider:\n");
     int result = scanf("%d%d", &dividend, &divider);
-    assert(result == 2);
-
-    if (dividend != fabs(dividend)) {
-        dividendSign *= -1;
-        dividend *= -1;
-    }
-    if (divider != fabs(divider)) {
-        dividerSign *= -1;
-        divider *= -1;
+    if (result != 2) {
+        printf("Incorrect input\n");
+        return 1;
     }
 
-    while (dividend >= divider) {
-        dividend -= divider;
-        counter += 1;
-    }
-
-    if (dividendSign != dividerSign) {
-        resultSign *= -1;
-    }
-
-    printf("Incomplete quotient = %d\nRemainder of division = %d", counter * resultSign, dividend);
+    incompleteQuotient(dividend, divider);
 }
