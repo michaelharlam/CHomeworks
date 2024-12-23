@@ -16,6 +16,22 @@ bool testOfHashFunction(void) {
     return true;
 }
 
+bool testOfAppendAndGetValueFromHashTable(void) {
+    HashTable *hashTable = createHashTable();
+
+    appendToTable(&hashTable, "hello", 2);
+    appendToTable(&hashTable, "lehlo", 3);
+    appendToTable(&hashTable, "yyy", 4);
+
+    bool result = false;
+    if ((getValueFromTable(hashTable, "hello") == 2) && (getValueFromTable(hashTable, "lehlo") == 3) && (getValueFromTable(hashTable, "yyy") == 4)) {
+        result = true;
+    }
+
+    destroyHashTable(&hashTable);
+    return result;
+}
+
 bool testOfFileReader(void) {
     char trueResult[30] = "Test of; file, ?reader: !txt.";
     int trueLength = strlen(trueResult);
@@ -34,5 +50,5 @@ bool testOfFileReader(void) {
 }
 
 bool runTests(void) {
-    return testOfHashFunction() && testOfFileReader();
+    return testOfHashFunction() && testOfFileReader() && testOfAppendAndGetValueFromHashTable();
 }

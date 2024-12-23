@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "list.h"
 #include <stdio.h>
+#include <stdbool.h>
 #include "string.h"
 
 typedef struct HashTable {
@@ -59,6 +60,16 @@ int getValueFromTable(HashTable *HashTable, const char *key) {
         }
     }
     return 0;
+}
+
+void destroyHashTable(HashTable **HashTable) {
+    for (int i = 0; i < 256; ++i) {
+        List *hashNode = (*HashTable)->table[i];
+        if (hashNode != NULL) {
+            free(hashNode);
+        }
+    }
+    free(*HashTable);
 }
 
 List **getTable(HashTable *HashTable) {

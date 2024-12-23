@@ -9,15 +9,7 @@ List* initList(void);
 
 Node* createNode(const char *key, int value);
 
-void insertAfter(List *list, Node* node, Node* newNode);
-
-void insertBefore(List *list, Node *node, Node *newNode);
-
-void insertInBeginning(List *list, Node *newNode);
-
 void append(List *list, const char *key, int value);
-
-void appendCopy(List *list, const char *key, int value);
 
 void removeFromList(List *list, Node *node);
 

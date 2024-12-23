@@ -12,7 +12,11 @@ void printTable(HashTable *hashTable);
 
 void appendToTable(HashTable **hashTable, const char *key, int value);
 
+int getValueFromTable(HashTable *hashTable, const char *key);
+
 List **getTable(HashTable *HashTable);
+
+void destroyHashTable(HashTable **hashTable);
 
 int maxLengthOfList(HashTable *HashTable);
 

@@ -39,40 +39,6 @@ Node* createNode(const char *key, const int value) {
     return node;
 }
 
-void insertAfter(List *list, Node *node, Node *newNode) {
-    newNode->right = node->right;
-    newNode->left = node;
-    if (node->right != NULL) {
-        node->right->left = newNode;
-    }
-    node->right = newNode;
-    list->size++;
-}
-
-void insertBefore(List *list, Node *node, Node *newNode) {
-    newNode->left = node->left;
-    newNode->right = node;
-    if (node->left != NULL) {
-        node->left->right = newNode;
-    }
-    node->left = newNode;
-    list->size++;
-}
-
-void insertInBeginning(List *list, Node *newNode) {
-    newNode->right = list->first;
-    newNode->left = NULL;
-
-    if (list->first != NULL) {
-        list->first->left = newNode;
-    } else {
-        list->last = newNode;
-    }
-
-    list->first = newNode;
-    list->size++;
-}
-
 void append(List *list, const char *key, int value) {
     Node *newNode = createNode(key, value);
     newNode->right = NULL;
@@ -84,15 +50,6 @@ void append(List *list, const char *key, int value) {
     }
     list->last = newNode;
     list->size++;
-}
-
-void appendCopy(List *list, const char *key, int value) {
-    Node *newNode = malloc(sizeof(Node));
-    newNode->value = value;
-    newNode->key = key;
-    newNode->left = NULL;
-    newNode->right = NULL;
-    append(list, key, value);
 }
 
 void removeFromList(List *list, Node *node) {
