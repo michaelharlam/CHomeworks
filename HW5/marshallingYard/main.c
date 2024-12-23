@@ -18,7 +18,8 @@ int operationsPriority(char operator) {
 
 void marshallingYard(char *infix, char *postfix) {
     Stack *stack = createStack();
-    int i = 0, j = 0;
+    int i = 0;
+    int j = 0;
 
     while (infix[i] != '\0') {
         if (infix[i] >= '0' && infix[i] <= '9') {
@@ -36,7 +37,7 @@ void marshallingYard(char *infix, char *postfix) {
                 ++j;
             }
         } else {
-            if (!isEmpty(stack)) {
+            if ((!isEmpty(stack)) && (strcmp(postfix, "") != 0)) {
                 char operator = pop(stack);
                 push(stack, operator);
                 while (!isEmpty(stack) && operationsPriority(infix[i]) <= operationsPriority(operator)) {
@@ -61,9 +62,9 @@ void marshallingYard(char *infix, char *postfix) {
 }
 
 bool testForMarshallingYard(void) {
-    char postfix[100] = { '\0' };
-    marshallingYard("*+11-42", postfix);
-    if (strcmp(postfix, "11+42-*") == 0) {
+    char postfix[8] = { '\0' };
+    marshallingYard("*+567", postfix);
+    if (strcmp(postfix, "56+7*") == 0) {
         return true;
     }
     printf("Test for marshalling Yard is failed.\n");
@@ -71,6 +72,10 @@ bool testForMarshallingYard(void) {
 }
 
 int main(void) {
+    if (!testForMarshallingYard()) {
+        return 1;
+    }
+
     char infix[100] = { '\0' };
     char postfix[100] = { '\0' };
     printf("Вас приветствует сортировочная станция!\n\nВведите выражение в инфиксной форме без пробелов: ");
