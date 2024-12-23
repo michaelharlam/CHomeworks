@@ -10,10 +10,25 @@ typedef struct HashTable {
 
 HashTable *createHashTable(void) {
     HashTable *hashTable = malloc(sizeof(HashTable));
+    if (hashTable == NULL) {
+        return NULL;
+    }
+
     hashTable->table = malloc(256 * sizeof(List*));
+    if (hashTable->table == NULL) {
+        free(hashTable);
+        return NULL;
+    }
+
     for (int i = 0; i < 256; ++i) {
         hashTable->table[i] = initList();
+        if (hashTable->table[i] == NULL) {
+            free(hashTable->table);
+            free(hashTable);
+            return NULL;
+        }
     }
+
     return hashTable;
 }
 
