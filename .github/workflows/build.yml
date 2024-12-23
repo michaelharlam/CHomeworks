@@ -12,4 +12,4 @@ jobs:
     - name: Make script executable
       uses: chmod +x ./build.sh
     - name: Run build script
-      uses: ./build.sh
+      uses: ./../../build.sh
