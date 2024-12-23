@@ -17,6 +17,9 @@ typedef struct Tree {
 
 Node *createNode(const char *key, const char *value) {
     Node *newNode = malloc(sizeof(Node));
+    if (newNode == NULL) {
+        return NULL;
+    }
     newNode->key = strdup(key);
     newNode->value = strdup(value);
     newNode->leftChild = NULL;
@@ -27,6 +30,9 @@ Node *createNode(const char *key, const char *value) {
 
 Tree *createTree() {
     Tree *newTree = malloc(sizeof(Tree));
+    if (newTree == NULL) {
+        return NULL;
+    }
     newTree->root = NULL;
     return newTree;
 }
