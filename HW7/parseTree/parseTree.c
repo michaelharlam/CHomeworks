@@ -13,6 +13,9 @@ typedef struct Node {
 
 Node *createNode(char *value) {
     Node *newNode = malloc(sizeof(Node));
+    if (newNode == NULL) {
+        return NULL;
+    }
     newNode->value = strdup(value);
     newNode->leftChild = NULL;
     newNode->rightChild = NULL;
