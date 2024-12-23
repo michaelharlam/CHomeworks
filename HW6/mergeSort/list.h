@@ -8,6 +8,8 @@ List* initList(void);
 
 Node* createNode(char *name, char *telephoneNumber);
 
+void append(List *list, Node *newNode);
+
 void append(List *list, Node *node);
 
 void removeFromList(List *list, Node *node);

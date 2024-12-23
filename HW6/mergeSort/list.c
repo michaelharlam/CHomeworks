@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <assert.h>
 #include <string.h>
 #include "list.h"
+#define SIZE_OF_LIST 100
 
 typedef struct Node {
     char *name;
@@ -19,7 +19,9 @@ typedef struct List {
 
 List* initList(void) {
     List *list = malloc(sizeof(List));
-    assert(list != NULL);
+    if (list == NULL) {
+        return NULL;
+    }
     list->first = NULL;
     list->last = NULL;
     list->size = 0;
@@ -28,13 +30,13 @@ List* initList(void) {
 
 Node* createNode(char *name, char *telephoneNumber) {
     Node *node = malloc(sizeof(Node));
-    node->name = calloc(100, sizeof(char));
+    node->name = malloc(SIZE_OF_LIST * sizeof(char));
     if (name == NULL) {
-        printf("wtf ");
+        return NULL;
     }
-    node->telephoneNumber = calloc(100, sizeof(char));
+    node->telephoneNumber = malloc(SIZE_OF_LIST * sizeof(char));
     if (telephoneNumber == NULL) {
-        printf("wtf2 ");
+        return NULL;
     }
     strcpy(node->telephoneNumber, telephoneNumber);
     strcpy(node->name, name);
@@ -45,6 +47,9 @@ Node* createNode(char *name, char *telephoneNumber) {
 
 void append(List *list, Node *node) {
     Node *newNode = malloc(sizeof(Node));
+    if (newNode == NULL) {
+        return;
+    }
     newNode->telephoneNumber = node->telephoneNumber;
     newNode->name = node->name;
     newNode->right = NULL;
