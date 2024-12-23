@@ -13,16 +13,18 @@ void dictionary(void) {
     scanf("%d", &command);
 
     Tree *map = createTree();
-    char *key = malloc(sizeof(char) * 100);
+    char key[100] = { '\0' };
     while (command != 0) {
         if (command == 0) {
             break;
-        } else if (command == 1) {
+        }
+
+        if (command == 1) {
             printf("Введите ключ: ");
-            scanf("%s", &key);
+            scanf("%99s", key);
 
             printf("Введите значение: ");
-            char *value = malloc(sizeof(char) * 100);
+            char value[100] = { '\0' };
             scanf("%s", value);
 
             append(map, key, value);
@@ -40,7 +42,7 @@ void dictionary(void) {
             printf("Введите ключ: ");
             scanf("%s", &key);
 
-            char *result = getValue(map, key);
+            const char *result = getValue(map, key);
             if (result == NULL) {
                 printf("Такого ключа нет в словаре.\n");
             } else {

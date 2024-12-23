@@ -1,6 +1,3 @@
-#ifndef DICTIONARY_H
-#define DICTIONARY_H
+#pragma once
 
 void dictionary(void);
-
-#endif
