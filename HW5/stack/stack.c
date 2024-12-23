@@ -3,13 +3,13 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-typedef struct stackElement {
+typedef struct StackElement {
     char value;
-    struct stackElement *next;
-} stackElement;
+    struct StackElement *next;
+} StackElement;
 
 typedef struct Stack {
-    stackElement *head;
+    StackElement *head;
 } Stack;
 
 Stack *createStack(void) {
@@ -19,14 +19,14 @@ Stack *createStack(void) {
 }
 
 void push(Stack *stack, int value) {
-    stackElement *element = malloc(sizeof(stackElement));
+    StackElement *element = malloc(sizeof(StackElement));
     element->value = value;
     element->next = stack->head;
     stack->head = element;
 }
 
 int pop(Stack *stack) {
-    stackElement *tmp = stack->head;
+    StackElement *tmp = stack->head;
     int value = tmp->value;
     stack->head = tmp->next;
     free(tmp);

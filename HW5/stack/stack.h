@@ -2,7 +2,7 @@
 #define STACK_H
 #include <stdbool.h>
 
-typedef struct stackElement stackElement;
+typedef struct StackElement StackElement;
 
 typedef struct Stack Stack;
 
