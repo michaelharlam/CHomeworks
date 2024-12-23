@@ -1,5 +1,7 @@
 #include "../stack/stack.h"
 #include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
 
 int operationsPriority(char operator) {
     switch (operator) {
@@ -58,9 +60,19 @@ void marshallingYard(char *infix, char *postfix) {
     postfix[j] = '\0';
 }
 
+bool testForMarshallingYard(void) {
+    char postfix[100] = { '\0' };
+    marshallingYard("*+11-42", postfix);
+    if (strcmp(postfix, "11+42-*") == 0) {
+        return true;
+    }
+    printf("Test for marshalling Yard is failed.\n");
+    return false;
+}
+
 int main(void) {
-    char infix[100] = { 0 };
-    char postfix[100] = { 0 };
+    char infix[100] = { '\0' };
+    char postfix[100] = { '\0' };
     printf("Вас приветствует сортировочная станция!\n\nВведите выражение в инфиксной форме без пробелов: ");
     scanf("%s", infix);
     marshallingYard(infix, postfix);
