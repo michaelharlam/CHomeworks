@@ -26,6 +26,8 @@ int calculate(int number1, int number2, char operation) {
             return number1 * number2;
         case '/':
             return number1 / number2;
+        default:
+            return 0;
     }
 }
 
@@ -71,4 +73,5 @@ int main(void) {
 
     int result = postfixCalculator(expression, strlen(expression));
     printf("%d\n", result);
+    return 0;
 }
