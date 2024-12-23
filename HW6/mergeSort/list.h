@@ -1,5 +1,4 @@
-#ifndef LIST_H
-#define LIST_H
+#pragma once
 
 typedef struct Node Node;
 
@@ -9,15 +8,7 @@ List* initList(void);
 
 Node* createNode(char *name, char *telephoneNumber);
 
-void insertAfter(List *list, Node* node, Node* newNode);
-
-void insertBefore(List *list, Node *node, Node *newNode);
-
-void insertInBeginning(List *list, Node *newNode);
-
-void append(List *list, Node *newNode);
-
-void appendCopy(List *list, Node *node);
+void append(List *list, Node *node);
 
 void removeFromList(List *list, Node *node);
 
@@ -32,5 +23,3 @@ char *getValue(Node *node, int part);
 int getSize(List *list);
 
 void freeList(List *list);
-
-#endif //LIST_H

@@ -43,92 +43,19 @@ Node* createNode(char *name, char *telephoneNumber) {
     return node;
 }
 
-/*void insertAfter(List *list, Node *node, Node *newNode) {
-    newNode->right = node->right;
-    newNode->left = node;
-    node->right = newNode;
-    list->size++;
-}*/
-
-void insertAfter(List *list, Node *node, Node *newNode) {
-    newNode->right = node->right;
-    newNode->left = node;
-    if (node->right != NULL) {
-        node->right->left = newNode; // Добавляем ссылку на новый узел для правого узла
-    }
-    node->right = newNode;
-    list->size++;
-}
-
-/*void insertBefore(List *list, Node *node, Node *newNode) {
-    newNode->left = node->left;
-    newNode->right = node;
-    node->left = newNode;
-    list->size++;
-}*/
-
-void insertBefore(List *list, Node *node, Node *newNode) {
-    newNode->left = node->left;
-    newNode->right = node;
-    if (node->left != NULL) {
-        node->left->right = newNode; // Добавляем ссылку на новый узел для левого узла
-    }
-    node->left = newNode;
-    list->size++;
-}
-
-
-/*void insertInBeginning(List *list, Node *newNode) {
-    newNode->right = list->first;
-    newNode->left = NULL;
-    list->first = newNode;
-    list->size++;
-}*/
-
-void insertInBeginning(List *list, Node *newNode) {
-    newNode->right = list->first;
-    newNode->left = NULL;
-
-    if (list->first != NULL) { // Если уже есть первый узел
-        list->first->left = newNode;
+void append(List *list, Node *node) {
+    Node *newNode = malloc(sizeof(Node));
+    newNode->telephoneNumber = node->telephoneNumber;
+    newNode->name = node->name;
+    newNode->right = NULL;
+    newNode->left = list->last;
+    if (list->last != NULL) {
+        list->last->right = newNode;
     } else {
-        list->last = newNode; // Если список пуст, новый узел становится последним
-    }
-
-    list->first = newNode;
-    list->size++;
-}
-
-
-/*void append(List *list, Node *newNode) {
-    newNode->right = NULL;
-    newNode->left = list->last;
-    if (list->last != NULL) {
-        list->last->right = newNode;
-    }
-    list->last = newNode;
-    list->size++;
-}*/
-
-void append(List *list, Node *newNode) {
-    newNode->right = NULL;
-    newNode->left = list->last;
-    if (list->last != NULL) {
-        list->last->right = newNode;
-    } else { // Если список пуст, новый узел становится первым
         list->first = newNode;
     }
     list->last = newNode;
     list->size++;
-}
-
-void appendCopy(List *list, Node *node) {
-    Node *newNode = malloc(sizeof(Node));
-    newNode->telephoneNumber = node->telephoneNumber;
-    newNode->name = node->name;
-    newNode->left = NULL;
-    newNode->right = NULL;
-    append(list, newNode);
 }
 
 void removeFromList(List *list, Node *node) {
@@ -158,7 +85,8 @@ Node *last(List *list) {
 char *getValue(Node *node, int part) {
     if (part == 0) {
         return node->name;
-    } else if (part == 1) {
+    }
+    if (part == 1) {
         return node->telephoneNumber;
     }
 }
@@ -170,6 +98,7 @@ void freeList(List *list) {
         free(node);
         node = next;
     }
+    free(list);
 }
 
 int getSize(List *list) {

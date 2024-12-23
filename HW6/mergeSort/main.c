@@ -44,14 +44,14 @@ List* mergeSort(List *list, int part) {
     int counter = 0;
     while (current != NULL && counter < middle) {
         Node* nextNode = next(current);
-        appendCopy(leftList, current);
+        append(leftList, current);
         current = nextNode;
         counter++;
     }
 
     while (current != NULL) {
         Node* nextNode = next(current);
-        appendCopy(rightList, current);
+        append(rightList, current);
         current = nextNode;
     }
 
@@ -70,24 +70,24 @@ List* mergeSort(List *list, int part) {
 
         if (strcmp(leftValue, rightValue) <= 0) {
             Node* nextLeft = next(leftNode);
-            appendCopy(list, leftNode);
+            append(list, leftNode);
             leftNode = nextLeft;
         } else {
             Node* nextRight = next(rightNode);
-            appendCopy(list, rightNode);
+            append(list, rightNode);
             rightNode = nextRight;
         }
     }
 
     while (leftNode != NULL) {
         Node* nextLeft = next(leftNode);
-        appendCopy(list,  leftNode);
+        append(list,  leftNode);
         leftNode = nextLeft;
     }
 
     while (rightNode != NULL) {
         Node* nextRight = next(rightNode);
-        appendCopy(list, rightNode);
+        append(list, rightNode);
         rightNode = nextRight;
     }
 
