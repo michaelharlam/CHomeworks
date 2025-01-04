@@ -13,5 +13,6 @@ int main(void) {
     printf("Максимальная длина списка: %d.\n", maxLengthOfList(hashTable));
     printf("Средняя длина списка: %f.\n", averageLengthOfList(hashTable));
     printf("Коэффициент заполняемости таблицы: %f.\n", occupancyRate(hashTable));
+    destroyHashTable(&hashTable);
     return 0;
 }

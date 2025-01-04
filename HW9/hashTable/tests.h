@@ -1,7 +1,4 @@
-#ifndef TESTS_H
-#define TESTS_H
+#pragma once
 #include "stdbool.h"
 
-bool runTests(void);
-
-#endif
+bool runTests(void); // запуск тестов

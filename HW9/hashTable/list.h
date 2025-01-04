@@ -1,32 +1,29 @@
-#ifndef LIST_H
-#define LIST_H
+#pragma once
 
-typedef struct Node Node;
+typedef struct Node Node; // структура узла списка
 
-typedef struct List List;
+typedef struct List List; // структура списка
 
-List* initList(void);
+List* initList(void); // инициализация списка; возвращает указатель на список
 
-Node* createNode(const char *key, int value);
+Node* createNode(const char *key, int value); // создание узла; возвращает указатель на узел
 
-void append(List *list, const char *key, int value);
+void append(List *list, const char *key, int value); // добавление элемента в список по строковому ключу и целочисленному значению
 
-void removeFromList(List *list, Node *node);
+void removeFromList(List *list, Node *node); // удаление указанного в параметрах узла из указанного там же списка
 
-Node *next(Node *node);
+Node *next(Node *node); // возвращает следующий узел за данным
 
-Node *first(List *list);
+Node *first(List *list); // возвращает первый узел списка
 
-Node *last(List *list);
+Node *last(List *list); // возвращает последний узел списка
 
-int getSize(List *list);
+int getSize(List *list); // возвращает размер списка
 
-void freeList(List *list);
+void freeList(List *list); // удаление списка
 
-const char *getKey(Node *node);
+const char *getKey(Node *node); // получение строкового ключа из узла
 
-int getValue(Node *node);
+int getValue(Node *node); // получение целочисленного значения из узла
 
-void changeValue(Node *node, int value);
-
-#endif //LIST_H
+void changeValue(Node *node, int value); // замена целочисленного значения в узле

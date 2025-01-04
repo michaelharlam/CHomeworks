@@ -4,20 +4,12 @@
 #include <stdlib.h>
 
 #include "hashTable.h"
-#include "fileReader.h"
+#include "readFile.h"
 
-bool testOfHashFunction(void) {
-    int hashOfTheFirstWord = hashFunction("hello");
-    int hashOfTheSecondWord = hashFunction("lehlo");
-    if ((hashOfTheFirstWord != hashOfTheSecondWord) || (hashOfTheFirstWord > 255) || (hashOfTheSecondWord > 255)) {
-        printf("Test of the hash function is failed.");
-        return false;
-    }
-    return true;
-}
+#define SIZE_OF_HASH_TABLE 256
 
 bool testOfAppendAndGetValueFromHashTable(void) {
-    HashTable *hashTable = createHashTable();
+    HashTable *hashTable = createHashTable(SIZE_OF_HASH_TABLE);
 
     appendToTable(&hashTable, "hello", 2);
     appendToTable(&hashTable, "lehlo", 3);
@@ -32,12 +24,12 @@ bool testOfAppendAndGetValueFromHashTable(void) {
     return result;
 }
 
-bool testOfFileReader(void) {
+bool testOfReadFile(void) {
     char trueResult[30] = "Test of; file, ?reader: !txt.";
     int trueLength = strlen(trueResult);
     char *result = malloc(sizeof(char) * 100);
     int length = 0;
-    bool isOpened = fileReader(result, &length, "testOfFileReader.txt");
+    bool isOpened = readFile(result, &length, "testOfFileReader.txt");
     bool isEqualStrings = strcmp(trueResult, result) == 0;
     bool isEqualLength = trueLength == length;
     free(result);
@@ -50,5 +42,5 @@ bool testOfFileReader(void) {
 }
 
 bool runTests(void) {
-    return testOfHashFunction() && testOfFileReader() && testOfAppendAndGetValueFromHashTable();
+    return testOfReadFile() && testOfAppendAndGetValueFromHashTable();
 }

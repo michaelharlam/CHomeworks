@@ -1,27 +1,22 @@
-#ifndef HASHTABLE_H
-#define HASHTABLE_H
+#pragma once
 #include "list.h"
 
-typedef struct HashTable HashTable;
+typedef struct HashTable HashTable; // структура с хэш-таблицей; поля: таблица, размер
 
-HashTable *createHashTable(void);
+HashTable *createHashTable(int size); // создание хэш-таблицы; принимает размер, возвращает хэш-таблицу
 
-int hashFunction(const char *key);
+void printTable(HashTable *hashTable); // вывод хэш-таблицы
 
-void printTable(HashTable *hashTable);
+void appendToTable(HashTable **hashTable, const char *key, int value); // добавление элемента в таблицу; принимает хэш-таблицу, строковый ключ и целочисленное значение
 
-void appendToTable(HashTable **hashTable, const char *key, int value);
+int getValueFromTable(HashTable *hashTable, const char *key); // получение значения из таблицы по ключу; принимает хэш-таблицу и строковый ключ, возвращает целочисленное значение
 
-int getValueFromTable(HashTable *hashTable, const char *key);
+List **getTable(HashTable *HashTable); // получение массива списков (самой таблицы) из хэш-таблицы
 
-List **getTable(HashTable *HashTable);
+void destroyHashTable(HashTable **hashTable); // удаление хэш-таблицы
 
-void destroyHashTable(HashTable **hashTable);
+unsigned int maxLengthOfList(HashTable *HashTable); // функция находит и возвращает максимальную длину списка в хэш-таблице
 
-int maxLengthOfList(HashTable *HashTable);
+float averageLengthOfList(HashTable *HashTable); // среднюю длину, в остальном аналогична предыдущей
 
-float averageLengthOfList(HashTable *HashTable);
-
-float occupancyRate(HashTable *HashTable);
-
-#endif
+float occupancyRate(HashTable *HashTable); // возвращает коэффициент заполнения хэш-таблицы

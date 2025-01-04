@@ -19,30 +19,20 @@ typedef struct List {
 } List;
 
 List* initList(void) {
-    List *list = malloc(sizeof(List));
+    List *list = calloc(1, sizeof(List));
     if (list == NULL) {
         return NULL;
     }
-    list->first = NULL;
-    list->last = NULL;
-    list->size = 0;
     return list;
 }
 
 Node* createNode(const char *key, const int value) {
-    Node *node = malloc(sizeof(Node));
+    Node *node = calloc(1, sizeof(Node));
     if (node == NULL) {
-        return NULL;
-    }
-    node->key = malloc(SIZE_OF_LIST *sizeof(const char));
-    if (key == NULL) {
-        free(node);
         return NULL;
     }
     node->value = value;
     node->key = strdup(key);
-    node->left = NULL;
-    node->right = NULL;
     return node;
 }
 
