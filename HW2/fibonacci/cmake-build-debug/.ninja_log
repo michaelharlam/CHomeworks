@@ -1,7 +1,0 @@
-# ninja log v6
-1	130	1727559636907364343	CMakeFiles/fibonachchi.dir/fibonachi.c.o	e84dfba845ee1530
-130	207	1727559637036749229	fibonachchi	2ac6af27ecd3a4e6
-1	31	1727559723807397210	CMakeFiles/fibonachchi.dir/fibonachi.c.o	e84dfba845ee1530
-31	56	1727559723837673758	fibonachchi	2ac6af27ecd3a4e6
-2	166	1727596732584559583	CMakeFiles/fibonachchi.dir/fibonachi.c.o	e84dfba845ee1530
-166	262	1727596732748530006	fibonachchi	2ac6af27ecd3a4e6
