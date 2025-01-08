@@ -9,46 +9,40 @@ long fibonaссiNumbersRecursive(int lastNumber) {
 }
 
 long fibonacсiNumbersIterative(int lastNumber) {
-    long number[10000] = {1, 1};
+    long first = 1;
+    long second = 1;
+    long result = 0;
 
     for (int i = 2; i < lastNumber; i++) {
-        number[i] = number[i - 1] + number[i - 2];
+        result = first + second;
+        first = second;
+        second = result;
     }
 
-    return number[lastNumber - 1];
+    return result;
 }
 
-bool iterativeTest1(void) {
-    if (fibonacсiNumbersIterative(7) == 13) {
-        return true;
-    }
-    return false;
+bool testOfIterativeVersion1(void) {
+    return fibonacсiNumbersIterative(7) == 13;
 }
 
-bool iterativeTest2(void) {
-    if (fibonacсiNumbersIterative(11) == 89) {
-        return true;
-    }
-    return false;
+bool testOfIterativeVersion2(void) {
+    return fibonacсiNumbersIterative(11) == 89;
 }
 
-bool recursiveTest1(void) {
-    if (fibonaссiNumbersRecursive(7) == 13) {
-        return true;
-    }
-    return false;
+bool testOfRecursiveVersion1(void) {
+    return fibonaссiNumbersRecursive(7) == 13;
 }
 
-bool recursiveTest2(void) {
-    if (fibonacсiNumbersIterative(11) == 89) {
-        return true;
-    }
-    return false;
+bool testOfRecursiveVersion2(void) {
+    return fibonacсiNumbersIterative(11) == 89;
 }
 
-bool test(void) {
-    bool valueOfRecursiveTest1 = recursiveTest1(), valueOfRecursiveTest2 = recursiveTest2();
-    bool valueOfIterativeTest1 = iterativeTest1(), valueOfIterativeTest2 = iterativeTest2();
+bool runTests(void) {
+    bool valueOfRecursiveTest1 = testOfRecursiveVersion1();
+    bool valueOfRecursiveTest2 = testOfRecursiveVersion2();
+    bool valueOfIterativeTest1 = testOfIterativeVersion1();
+    bool valueOfIterativeTest2 = testOfIterativeVersion2();
     if (valueOfIterativeTest1 && valueOfIterativeTest2 && valueOfRecursiveTest1 && valueOfRecursiveTest2) {
         return true;
     }
@@ -68,17 +62,20 @@ bool test(void) {
 }
 
 int main(void) {
-    if (test()) {
-        printf("Iterative version:\n");
-        for (int i = 2; i < 50; ++i) {
-            printf("%ld\n", fibonacсiNumbersIterative(i));
-        }
-
-        printf("\nRecursive version:\n");
-        for (int i = 2; i < 50; ++i) {
-            printf("%ld\n", fibonaссiNumbersRecursive(i));
-        }
+    if (!runTests()) {
+        return -1;
     }
+
+    printf("Iterative version:\n");
+    for (int i = 2; i < 50; ++i) {
+        printf("%ld\n", fibonacсiNumbersIterative(i));
+    }
+
+    printf("\nRecursive version:\n");
+    for (int i = 2; i < 50; ++i) {
+        printf("%ld\n", fibonaссiNumbersRecursive(i));
+    }
+    return 0;
 }
 
 // приблизительно с 38го числа (63245986) рекурсивная версия заметно медленнее, чем итеративная //
