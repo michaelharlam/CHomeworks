@@ -3,6 +3,9 @@
 #include <stdlib.h>
 
 void swap(int *number1, int *number2) {
+    if (number1 == number2) {
+        return;
+    }
     int temp = *number1;
     *number1 = *number2;
     *number2 = temp;
@@ -36,8 +39,9 @@ void quickSort(int *array, int size) {
 }
 
 int mostCommonElement(int array[], int length) {
-    int counter = 0, maximum = 0;
-    int element = array[0];
+    int counter = 0;
+    int maximum = 0;
+    int element = array[length - 1];
     int mostCommon = array[0];
 
     quickSort(array, length - 1);
@@ -50,17 +54,20 @@ int mostCommonElement(int array[], int length) {
                 maximum = counter;
                 mostCommon = element;
             }
-            counter = 1;
             element = array[i];
+            counter = 1;
         }
+    }
+    if (counter > maximum) {
+        mostCommon = element;
     }
 
     return mostCommon;
 }
 
-bool test1(void) {
-    int array[5] = {1, 4, 1, 2, 5};
-    int mostCommon = 1;
+bool mostCommonElementSimpleTest(void) {
+    int array[5] = {1, 1, 2, 2, 2};
+    int mostCommon = 2;
     int result = mostCommonElement(array, 5);
     if (result == mostCommon) {
         return true;
@@ -68,7 +75,7 @@ bool test1(void) {
     return false;
 }
 
-bool test2(void) {
+bool mostCommonElementTestWithBigCountOfNumbers(void) {
     int array[19] = {1, 4, 4, 2, 5, 6, 4, 5, 0, 5, 8, 9, 8, 9, 86, 5, 34, 1, 0};
     int mostCommon = 5;
     int result = mostCommonElement(array, 19);
@@ -78,9 +85,9 @@ bool test2(void) {
     return false;
 }
 
-bool test(void) {
-    bool test1Attempt = test1();
-    bool test2Attempt = test2();
+bool runTests(void) {
+    bool test1Attempt = mostCommonElementSimpleTest();
+    bool test2Attempt = mostCommonElementTestWithBigCountOfNumbers();
     if (test1Attempt && test2Attempt) {
         return true;
     }
@@ -94,22 +101,32 @@ bool test(void) {
 }
 
 int main(void) {
-    if (test()) {
-        printf("Program is ready for work!\n");
-        printf("Input the length of array: ");
-
-        int length = 0;
-        int result = 0;
-
-        scanf("%d", &length);
-        int *array = malloc(length * sizeof(int));
-
-        for (int i = 0; i < length; ++i) {
-            array[i] = rand() % length;
-        }
-
-        result = mostCommonElement(array, length);
-        printf("The most common element is: %d\n", result);
-        free(array);
+    if (!runTests()) {
+        return -1;
     }
+
+    printf("Program is ready for work!\n");
+    printf("Input the length of array: ");
+
+    int length = 0;
+    int result = 0;
+
+    scanf("%d", &length);
+    int *array = malloc(length * sizeof(int));
+    if (array == NULL) {
+        printf("Memory allocation failed!\n");
+        return 1;
+    }
+
+    printf("The array: ");
+    for (int i = 0; i < length; ++i) {
+        array[i] = rand() % length;
+        printf("%d ", array[i]);
+    }
+    printf("\n");
+
+    result = mostCommonElement(array, length);
+    printf("The most common element is: %d\n", result);
+    free(array);
+    return 0;
 }
